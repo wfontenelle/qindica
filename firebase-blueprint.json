@@ -1,0 +1,36 @@
+{
+  "entities": {
+    "users": {
+      "description": "Collection of user profiles on Qindica trust network",
+      "fields": {
+        "id": { "type": "string", "description": "Unique user ID" },
+        "name": { "type": "string", "description": "Full name of the user" },
+        "bio": { "type": "string", "description": "Short bio or tagline" },
+        "photo": { "type": "string", "description": "Profile picture URL" },
+        "tags": { "type": "array", "description": "Skills and domain tags" },
+        "presentationText": { "type": "string", "description": "Long presentation about work and trust" },
+        "email": { "type": "string", "description": "Contact email" },
+        "phone": { "type": "string", "description": "Contact phone number" },
+        "whatsapp": { "type": "boolean", "description": "Whether the phone number accepts WhatsApp contact" },
+        "indicationCount": { "type": "number", "description": "Total number of trust recommendations received" },
+        "cep": { "type": "string", "description": "Postal code (CEP) formatted as 00000-000" },
+        "city": { "type": "string", "description": "City name" },
+        "state": { "type": "string", "description": "Federation unit / state acronym (e.g. SP, RJ)" },
+        "neighborhood": { "type": "string", "description": "Neighborhood or district" },
+        "street": { "type": "string", "description": "Street or logradouro" },
+        "latitude": { "type": "number", "description": "Geographic latitude coordinate" },
+        "longitude": { "type": "number", "description": "Geographic longitude coordinate" },
+        "updatedAt": { "type": "string", "description": "Timestamp of last update" }
+      }
+    },
+    "indications": {
+      "description": "Collection of trust recommendations made from one user to another",
+      "fields": {
+        "id": { "type": "string", "description": "Unique indication record ID" },
+        "fromUserId": { "type": "string", "description": "ID of user making recommendation" },
+        "toUserId": { "type": "string", "description": "ID of user receiving recommendation" },
+        "createdAt": { "type": "string", "description": "Timestamp when indication was created" }
+      }
+    }
+  }
+}

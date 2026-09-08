@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Qindica</title>
+    <meta name="description" content="Rede social de indicações baseada em confiança onde usuários recomendam pessoas." />
+    <meta property="og:title" content="Qindica" />
+    <meta property="og:description" content="Rede social de indicações baseada em confiança onde usuários recomendam pessoas." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- PWA & Mobile Web App Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Qindica" />
+    <meta name="application-name" content="Qindica" />
+    <meta name="theme-color" content="#7B2FFF" />
+
+    <style>
+      #initial-splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #F4F4F6;
+        color: #171717;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        z-index: 99999;
+      }
+      .dark #initial-splash {
+        background-color: #0E0E11;
+        color: #F5F5F5;
+      }
+      @keyframes splash-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04); }
+      }
+      @keyframes splash-progress {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(30%); }
+        100% { transform: translateX(150%); }
+      }
+      .splash-logo-box {
+        animation: splash-pulse 2s ease-in-out infinite;
+      }
+      .splash-bar-inner {
+        animation: splash-progress 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+    </style>
+    <script>
+      (function() {
+        try {
+          var mode = localStorage.getItem('qindica_theme_mode');
+          var isDark = mode === 'dark' || (!mode && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-[#F4F4F6] dark:bg-[#0E0E11] text-neutral-900 dark:text-neutral-100 font-sans antialiased select-none transition-colors duration-200">
+    <div id="root">
+      <div id="initial-splash">
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 320px; padding: 24px;">
+          <!-- Qindica Logo Badge -->
+          <div class="splash-logo-box" style="width: 68px; height: 68px; border-radius: 14px; background: linear-gradient(135deg, #8B42FF 0%, #6716EE 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 28px -6px rgba(123, 47, 255, 0.4); margin-bottom: 18px;">
+            <svg viewBox="0 0 512 512" width="46" height="46" fill="none">
+              <circle cx="248" cy="238" r="118" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round" />
+              <path d="M 290 280 L 366 356" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round" />
+              <polygon points="370,105 382,130 410,134 389,153 395,180 370,166 345,180 351,153 330,134 358,130" fill="#FBBF24" />
+            </svg>
+          </div>
+          
+          <h1 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;">Qindica</h1>
+          <p style="margin: 6px 0 24px 0; font-size: 13px; font-weight: 500; opacity: 0.65; line-height: 1.4;">Rede de indicações de confiança</p>
+          
+          <!-- Indeterminate Progress Indicator -->
+          <div style="width: 130px; height: 3px; border-radius: 999px; background-color: rgba(123, 47, 255, 0.15); overflow: hidden; position: relative;">
+            <div class="splash-bar-inner" style="position: absolute; top: 0; left: 0; bottom: 0; width: 60%; background: linear-gradient(90deg, #7B2FFF, #A36BFF); border-radius: 999px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

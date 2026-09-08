@@ -1,0 +1,6 @@
+{
+  "name": "Qindica",
+  "description": "Rede social de indicações baseada em confiança onde usuários recomendam pessoas.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
