@@ -621,47 +621,47 @@ export const LandingView: React.FC = () => {
 
       {/* 8. GIG ECONOMY & STORYTELLING MANIFESTO */}
       <section className="py-14 sm:py-20 px-6 sm:px-8 lg:px-12 max-w-5xl mx-auto">
-        <div className="p-6 sm:p-10 md:p-12 rounded-3xl bg-gradient-to-br from-neutral-900 to-neutral-800 text-white shadow-2xl relative overflow-hidden">
+        <div className="p-6 sm:p-10 md:p-12 rounded-3xl bg-gradient-to-b from-[#7B2FFF]/5 via-white to-neutral-100/60 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 text-neutral-900 dark:text-white border border-[#7B2FFF]/15 dark:border-neutral-800 shadow-xl relative overflow-hidden">
           
           {/* Subtle background glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#7B2FFF]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 space-y-6 max-w-3xl">
-            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#7B2FFF] text-white uppercase tracking-wider mb-3">
+            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#7B2FFF] text-white uppercase tracking-wider mb-3 shadow-xs">
               A Gig Economy Real · Manifesto
             </span>
 
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mt-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mt-3 text-neutral-900 dark:text-white">
               O "QI" corporativo sempre foi injusto.<br />
               Nós transformamos em poder para quem trabalha.
             </h2>
 
-            <div className="space-y-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
+            <div className="space-y-4 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
               <p>
                 No mundo corporativo tradicional, o termo <strong>"Q.I." (Quem Indica)</strong> carrega uma história amarga: vagas fechadas para amigos de chefes, processos seletivos teatrais e talentos descartados pela falta de um padrinho.
               </p>
               <p>
                 Mas quando olhamos para a <strong>economia informal brasileira</strong> — as diaristas que cuidam das nossas casas, os eletricistas que consertam emergências na chuva, as babás a quem confiamos nossos filhos —, a palavra <em>indicação</em> não é privilégio: <strong>é sobrevivência e segurança mútua</strong>.
               </p>
-              <p className="text-white font-medium">
+              <p className="text-neutral-900 dark:text-white font-medium">
                 O Qindica nasceu para dar a esse boca a boca a infraestrutura digital que ele merecia: sem cobrar mensalidade de quem acorda às 5h da manhã, sem algoritmos opacos e sem taxa por telefone trocado.
               </p>
             </div>
 
-            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-neutral-700/60">
+            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-neutral-200/80 dark:border-neutral-700/60">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#7B2FFF]/30 border border-[#7B2FFF] text-[#a068ff] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/30 border border-[#7B2FFF]/30 dark:border-[#7B2FFF] text-[#7B2FFF] dark:text-[#a068ff] flex items-center justify-center shrink-0">
                   <ShieldCheck size={20} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-white">Movimento Qindica</p>
-                  <p className="text-[11px] text-neutral-400">Iniciativa aberta por relações de confiança sem pedágio</p>
+                  <p className="text-xs font-bold text-neutral-900 dark:text-white">Movimento Qindica</p>
+                  <p className="text-[11px] text-neutral-500 dark:text-neutral-400">Iniciativa aberta por relações de confiança sem pedágio</p>
                 </div>
               </div>
 
               <button
                 onClick={() => navigate({ name: 'design-system' })}
-                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/20 flex items-center justify-center gap-2 transition cursor-pointer"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 dark:bg-white/10 dark:hover:bg-white/20 text-neutral-800 dark:text-white text-xs font-bold border border-neutral-200 dark:border-white/20 flex items-center justify-center gap-2 transition cursor-pointer"
               >
                 <Palette size={14} />
                 Ver Brand & Design System
