@@ -20,6 +20,7 @@ import {
   Download,
   Smartphone,
   Palette,
+  Menu,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { PWAInstallModal } from './PWAInstallModal';
@@ -45,8 +46,10 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
 
   const [navSearch, setNavSearch] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const isHome = currentRoute.name === 'home';
   const isProfileMe = currentRoute.name === 'profile-me';
@@ -57,7 +60,7 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
     (i) => i.fromUserId === currentUser.id
   ).length;
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -65,6 +68,12 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsDropdownOpen(false);
+      }
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -251,23 +260,23 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
             <Search size={17} strokeWidth={2.4} />
           </button>
 
-          {/* Install App Button */}
+          {/* Install App Button (Desktop & Tablet) */}
           <button
             id="topbar-install-pwa-btn"
             onClick={() => setIsInstallModalOpen(true)}
-            className="h-9 px-2.5 rounded-lg bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/20 hover:bg-[#7B2FFF]/15 dark:hover:bg-[#7B2FFF]/30 text-[#7B2FFF] dark:text-[#a068ff] flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 border border-[#7B2FFF]/30 shadow-2xs text-xs font-bold"
+            className="hidden sm:flex h-9 px-2.5 rounded-lg bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/20 hover:bg-[#7B2FFF]/15 dark:hover:bg-[#7B2FFF]/30 text-[#7B2FFF] dark:text-[#a068ff] items-center gap-1.5 transition-all cursor-pointer active:scale-95 border border-[#7B2FFF]/30 shadow-2xs text-xs font-bold"
             aria-label="Instalar Aplicativo"
             title="Instalar Qindica no celular ou computador"
           >
             <Download size={15} strokeWidth={2.4} />
-            <span className="hidden sm:inline text-[11px]">Instalar App</span>
+            <span className="inline text-[11px]">Instalar App</span>
           </button>
 
-          {/* Dark Mode Toggle Button (Accessible always) */}
+          {/* Dark Mode Toggle Button (Desktop & Tablet) */}
           <button
             id="theme-toggle-btn"
             onClick={toggleDarkMode}
-            className="w-9 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center transition-all cursor-pointer active:scale-95 border border-neutral-200/60 dark:border-neutral-700/60 shadow-2xs"
+            className="hidden sm:flex w-9 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 items-center justify-center transition-all cursor-pointer active:scale-95 border border-neutral-200/60 dark:border-neutral-700/60 shadow-2xs"
             aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
             title={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
           >
@@ -281,27 +290,132 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
           {/* Auth Section: Logged In vs Logged Out */}
           {!isAuthenticated ? (
             <div className="flex items-center gap-1.5">
+              {/* Desktop links */}
               <button
                 onClick={() => navigate({ name: 'landing' })}
                 className="hidden md:inline-flex px-2.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 dark:text-neutral-400 hover:text-[#7B2FFF] dark:hover:text-[#a068ff] transition-colors cursor-pointer"
               >
                 Sobre o App
               </button>
+
               <button
-                id="topbar-login-btn"
+                id="topbar-login-btn-desktop"
                 onClick={() => openAuthModal('login')}
-                className="px-3 py-1.5 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                className="hidden sm:inline-flex px-3 py-1.5 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
               >
                 Entrar
               </button>
+
               <button
-                id="topbar-signup-btn"
+                id="topbar-signup-btn-desktop"
                 onClick={() => openAuthModal('register')}
-                className="px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+                className="hidden sm:inline-flex px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer items-center gap-1"
               >
                 <LogIn size={13} strokeWidth={2.5} />
                 <span>Cadastrar</span>
               </button>
+
+              {/* Mobile Single Primary Action: Entrar */}
+              <button
+                id="topbar-login-btn-mobile"
+                onClick={() => openAuthModal('login')}
+                className="sm:hidden px-3 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+              >
+                <LogIn size={13} strokeWidth={2.5} />
+                <span>Entrar</span>
+              </button>
+
+              {/* Mobile Menu Dropdown (PWA, Dark Mode, Register, About) */}
+              <div className="sm:hidden relative" ref={mobileMenuRef}>
+                <button
+                  id="topbar-mobile-menu-btn"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all cursor-pointer border ${
+                    isMobileMenuOpen
+                      ? 'bg-[#7B2FFF]/10 border-[#7B2FFF] text-[#7B2FFF]'
+                      : 'bg-neutral-100 dark:bg-neutral-800 border-neutral-200/60 dark:border-neutral-700/60 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+                  }`}
+                  aria-label="Menu de opções"
+                >
+                  {isMobileMenuOpen ? <X size={17} /> : <Menu size={17} />}
+                </button>
+
+                {isMobileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#18181C] rounded-2xl shadow-xl border border-neutral-200/80 dark:border-neutral-800 p-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        openAuthModal('register');
+                      }}
+                      className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold text-[#7B2FFF] dark:text-[#a068ff] hover:bg-[#7B2FFF]/10 flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <UserPlus size={15} />
+                      <span>Criar uma conta grátis</span>
+                    </button>
+
+                    <div className="my-1 border-t border-neutral-100 dark:border-neutral-800" />
+
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsInstallModalOpen(true);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center justify-between transition-colors cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Smartphone size={15} className="text-[#7B2FFF]" />
+                        <span>Instalar no celular</span>
+                      </div>
+                      <span className="text-[10px] font-bold text-[#7B2FFF] bg-[#7B2FFF]/10 px-1.5 py-0.5 rounded">
+                        PWA
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        toggleDarkMode();
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center justify-between transition-colors cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        {isDarkMode ? (
+                          <Sun size={15} className="text-amber-400" />
+                        ) : (
+                          <Moon size={15} className="text-neutral-500" />
+                        )}
+                        <span>Modo Escuro</span>
+                      </div>
+                      <span className="text-[10px] uppercase font-bold text-neutral-400 dark:text-neutral-500">
+                        {isDarkMode ? 'Ligado' : 'Desligado'}
+                      </span>
+                    </button>
+
+                    <div className="my-1 border-t border-neutral-100 dark:border-neutral-800" />
+
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        navigate({ name: 'landing' });
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <Sparkles size={15} className="text-[#7B2FFF]" />
+                      <span>Sobre o Qindica</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        navigate({ name: 'design-system' });
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <Palette size={15} className="text-[#7B2FFF]" />
+                      <span>Brand & Design System</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <div className="relative" ref={dropdownRef}>

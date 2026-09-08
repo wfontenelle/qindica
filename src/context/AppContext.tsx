@@ -738,7 +738,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return;
       }
       console.error('Google Sign-In Error:', error);
-      showToast('Falha no login com Google. Tente novamente.');
+      if (error.code === 'auth/unauthorized-domain') {
+        showToast('Domínio não autorizado no Firebase. Adicione o domínio nas configurações do Authentication no Firebase Console.');
+      } else if (error.code === 'auth/operation-not-allowed') {
+        showToast('Provedor Google não está ativado no Firebase Console (Authentication > Sign-in method).');
+      } else if (error.code === 'auth/popup-blocked') {
+        showToast('O navegador bloqueou a janela de login. Por favor, permita popups.');
+      } else {
+        showToast(`Falha no login com Google: ${error.message || 'Tente novamente.'}`);
+      }
       throw error;
     }
   }, [showToast, closeAuthModal, connectReferralAndAwardStar]);
