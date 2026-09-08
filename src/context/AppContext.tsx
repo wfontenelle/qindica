@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import { User, Indication, ToastMessage, AppRoute, AuthMode, GeoLocation } from '../types';
 import { INITIAL_USERS, INITIAL_CURRENT_USER, INITIAL_INDICATIONS, CURRENT_USER_ID } from '../data/seedData';
 import { calculateNetworkDistances, UserNetworkStats, ReferrerAvatar } from '../utils/networkGraph';
-import { parseRouteFromLocation, syncUrlWithRoute } from '../utils/routes';
+import { parseRouteFromLocation, syncUrlWithRoute, markAppExplored } from '../utils/routes';
 import { calculateDistanceKm, fetchAddressByCep, getBrowserGeolocation } from '../utils/geo';
 import { auth, db, googleProvider } from '../lib/firebase';
 import { handleFirestoreError, OperationType } from '../lib/firestoreErrors';
@@ -271,6 +271,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const unsubscribeAuth = onAuthStateChanged(auth, async (fbUser) => {
       setIsAuthLoading(true);
       if (fbUser) {
+        markAppExplored();
         setAuthUser(fbUser);
         setIsAuthenticated(true);
 
@@ -580,6 +581,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const navigate = useCallback((route: AppRoute) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (route.name !== 'landing' && route.name !== 'design-system') {
+      markAppExplored();
+    }
     setCurrentRoute(route);
     syncUrlWithRoute(route);
     setRouteHistory((prev) => [...prev, route]);
