@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { UserCard } from '../components/UserCard';
 import { useApp } from '../context/AppContext';
-import { Sparkles, ArrowDownUp, Users, Star, Network, LogIn, MapPin, Navigation, Loader2, Check, Edit2, X, UserPlus } from 'lucide-react';
+import { Sparkles, ArrowDownUp, Users, Star, Network, LogIn, MapPin, Navigation, Loader2, Check, Edit2, X, UserPlus, Palette } from 'lucide-react';
 import { sortUsersByCriterion, SortOption } from '../utils/networkGraph';
 import { formatCep, cleanCep } from '../utils/geo';
 
@@ -226,10 +226,12 @@ export const HomeView: React.FC = () => {
               Conhecer a Proposta
             </button>
             <button
+              id="home-brand-system-btn"
               onClick={() => navigate({ name: 'design-system' })}
-              className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-[#7B2FFF] dark:text-[#a068ff] hover:bg-[#7B2FFF]/10 transition-colors cursor-pointer"
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold text-[#7B2FFF] dark:text-[#a068ff] bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/20 hover:bg-[#7B2FFF]/15 dark:hover:bg-[#7B2FFF]/30 border border-[#7B2FFF]/30 shadow-2xs transition-all cursor-pointer flex items-center gap-1.5 active:scale-95"
             >
-              Design System
+              <Palette size={13} strokeWidth={2.4} />
+              <span>Brand System</span>
             </button>
           </div>
         </div>

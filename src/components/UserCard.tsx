@@ -111,31 +111,11 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
       };
     }
 
-    // Unauthenticated (guest visitor)
-    if (netStats.allReferrers && netStats.allReferrers.length > 0) {
-      const refs = netStats.allReferrers;
-      if (refs.length === 1) {
-        return {
-          avatarsToShow: refs.slice(0, 1),
-          connectionText: `via ${refs[0].name}`,
-        };
-      }
-      if (refs.length === 2) {
-        return {
-          avatarsToShow: refs.slice(0, 2),
-          connectionText: `via ${refs[0].name} e ${refs[1].name}`,
-        };
-      }
-      return {
-        avatarsToShow: refs.slice(0, 3),
-        connectionText: `${refs.length} indicações`,
-      };
-    }
-
+    // Unauthenticated (guest visitor): foco apenas nas estrelas e total de indicações
     return {
       avatarsToShow: [],
       connectionText: (user.indicationCount || 0) > 0
-        ? `${user.indicationCount} indicações`
+        ? `${user.indicationCount} ${(user.indicationCount || 0) === 1 ? 'indicação' : 'indicações'}`
         : 'Seja o 1º a indicar',
     };
   }, [isAuthenticated, isMe, netStats, currentUser, user.indicationCount]);
@@ -215,12 +195,12 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
               </>
             ) : (user.indicationCount || 0) > 0 ? (
               <div className="flex items-center gap-1 text-white/95 text-[10px] sm:text-[11px] font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-                <Star size={10} className="fill-amber-300 text-amber-300 shrink-0" />
+                <Star size={11} className="fill-amber-300 text-amber-300 shrink-0" />
                 <span>{user.indicationCount} {user.indicationCount === 1 ? 'indicação' : 'indicações'}</span>
               </div>
             ) : (
               <div className="flex items-center gap-1 text-amber-300/95 text-[10px] sm:text-[11px] font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] truncate">
-                <Star size={10} className="text-amber-300 shrink-0 fill-amber-300" />
+                <Star size={11} className="text-amber-300 shrink-0 fill-amber-300" />
                 <span className="truncate">{connectionText}</span>
               </div>
             )}
