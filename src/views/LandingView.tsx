@@ -17,7 +17,9 @@ import {
   Palette,
   ExternalLink,
   MessageCircle,
-  HelpCircle
+  HelpCircle,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { UserCard } from '../components/UserCard';
@@ -73,24 +75,24 @@ export const LandingView: React.FC = () => {
             </span>
           </div>
 
-          <nav className="hidden lg:flex items-center gap-5 text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs font-semibold text-neutral-600 dark:text-neutral-300">
             <button 
               onClick={() => scrollToSection('problema')} 
               className="hover:text-[#7B2FFF] dark:hover:text-[#9D5CFF] transition-colors cursor-pointer"
             >
-              O Problema
+              Problema
             </button>
             <button 
               onClick={() => scrollToSection('como-funciona')} 
               className="hover:text-[#7B2FFF] dark:hover:text-[#9D5CFF] transition-colors cursor-pointer"
             >
-              Como Funciona
+              Como
             </button>
             <button 
               onClick={() => scrollToSection('graus')} 
               className="hover:text-[#7B2FFF] dark:hover:text-[#9D5CFF] transition-colors cursor-pointer"
             >
-              Graus de Confiança
+              Graus
             </button>
             <button 
               onClick={() => scrollToSection('diferenciais')} 
@@ -103,31 +105,46 @@ export const LandingView: React.FC = () => {
               className="hover:text-[#7B2FFF] dark:hover:text-[#9D5CFF] transition-colors cursor-pointer flex items-center gap-1"
             >
               <Smartphone size={13} className="text-[#7B2FFF]" />
-              Instalar App
+              App
             </button>
             <button 
               onClick={() => navigate({ name: 'design-system' })} 
               className="hover:text-[#7B2FFF] dark:hover:text-[#9D5CFF] transition-colors cursor-pointer flex items-center gap-1 text-[#7B2FFF] dark:text-[#9D5CFF]"
             >
               <Palette size={13} />
-              Brand System
+              Brand
             </button>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Theme Toggle Button */}
             <button
-              onClick={() => navigate({ name: 'home' })}
-              className="px-2.5 sm:px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition cursor-pointer shrink-0"
+              id="landing-theme-toggle-btn"
+              onClick={toggleDarkMode}
+              className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center transition-all cursor-pointer active:scale-95 border border-neutral-200/80 dark:border-neutral-700/80 shrink-0"
+              aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
+              title={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
             >
-              <span className="hidden sm:inline">Explorar Rede</span>
-              <span className="sm:hidden">Explorar</span>
+              {isDarkMode ? (
+                <Sun size={15} className="text-amber-400" />
+              ) : (
+                <Moon size={15} className="text-neutral-600" />
+              )}
+            </button>
+
+            <button
+              id="landing-nav-explore-btn"
+              onClick={() => navigate({ name: 'home' })}
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition cursor-pointer shrink-0"
+            >
+              Explorar
             </button>
             <button
+              id="landing-nav-register-btn"
               onClick={() => openAuthModal('register')}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#7B2FFF] hover:bg-[#6A24E3] active:scale-95 text-white text-xs font-bold shadow-sm shadow-[#7B2FFF]/30 transition-all cursor-pointer shrink-0"
+              className="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A24E3] active:scale-95 text-white text-xs font-bold shadow-sm shadow-[#7B2FFF]/30 transition-all cursor-pointer shrink-0"
             >
-              <span className="hidden sm:inline">Criar Conta Grátis</span>
-              <span className="sm:hidden">Cadastrar</span>
+              Criar Conta
             </button>
           </div>
         </div>

@@ -17,7 +17,9 @@ import {
   Compass, 
   HeartHandshake,
   CheckCircle2,
-  Share2
+  Share2,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { UserCard } from '../components/UserCard';
@@ -31,7 +33,7 @@ interface ColorToken {
 }
 
 export const DesignSystemView: React.FC = () => {
-  const { navigate, users } = useApp();
+  const { navigate, users, isDarkMode, toggleDarkMode } = useApp();
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'brand' | 'colors' | 'typography' | 'components' | 'voice'>('brand');
 
@@ -75,38 +77,60 @@ export const DesignSystemView: React.FC = () => {
     <div className="w-full min-h-screen text-neutral-900 dark:text-neutral-100 bg-white dark:bg-[#0E0E11] transition-colors duration-200 overflow-x-hidden">
       
       {/* Navigation Header */}
-      <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#0E0E11]/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 px-6 sm:px-8 lg:px-12 py-3.5">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#0E0E11]/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 px-4 sm:px-8 lg:px-12 py-3">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => navigate({ name: 'landing' })}
-              className="p-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 transition cursor-pointer"
+              className="p-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 transition cursor-pointer shrink-0"
               title="Voltar para a Landing Page"
             >
               <ArrowLeft size={18} />
             </button>
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-black tracking-tight">
+            <div className="flex items-center gap-1.5 sm:gap-2 truncate">
+              <span className="text-lg font-black tracking-tight shrink-0">
                 <span className="text-[#7B2FFF]">Qi</span>ndica
               </span>
-              <span className="text-xs px-2 py-0.5 rounded-md bg-[#7B2FFF]/10 text-[#7B2FFF] dark:text-[#a068ff] font-bold">
-                BDS · Brand & Design System
+              <span className="text-xs px-2 py-0.5 rounded-md bg-[#7B2FFF]/10 text-[#7B2FFF] dark:text-[#a068ff] font-bold shrink-0">
+                <span className="inline sm:hidden">BDS</span>
+                <span className="hidden sm:inline">BDS · Brand & Design System</span>
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Theme Toggle Button */}
             <button
-              onClick={() => navigate({ name: 'landing' })}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition cursor-pointer"
+              id="bds-theme-toggle-btn"
+              onClick={toggleDarkMode}
+              className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center transition-all cursor-pointer active:scale-95 border border-neutral-200/80 dark:border-neutral-700/80 shrink-0"
+              aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
+              title={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
             >
-              Ver Landing Page
+              {isDarkMode ? (
+                <Sun size={15} className="text-amber-400" />
+              ) : (
+                <Moon size={15} className="text-neutral-600" />
+              )}
+            </button>
+
+            <button
+              id="bds-nav-lp-btn"
+              onClick={() => navigate({ name: 'landing' })}
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold sm:font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition cursor-pointer shrink-0"
+              title="Ir para a Landing Page"
+            >
+              <span className="inline sm:hidden">LP</span>
+              <span className="hidden sm:inline">Ver Landing Page</span>
             </button>
             <button
+              id="bds-nav-app-btn"
               onClick={() => navigate({ name: 'home' })}
-              className="px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6916EE] text-white text-xs font-bold transition shadow-2xs cursor-pointer"
+              className="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6916EE] text-white text-xs font-bold transition shadow-2xs cursor-pointer active:scale-95 shrink-0"
+              title="Acessar o Aplicativo"
             >
-              Acessar App
+              <span className="inline sm:hidden">App</span>
+              <span className="hidden sm:inline">Acessar App</span>
             </button>
           </div>
         </div>
