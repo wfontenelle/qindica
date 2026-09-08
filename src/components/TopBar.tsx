@@ -260,11 +260,11 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
             <Search size={17} strokeWidth={2.4} />
           </button>
 
-          {/* Install App Button (Desktop & Tablet) */}
+          {/* Install App Button (Desktop) */}
           <button
             id="topbar-install-pwa-btn"
             onClick={() => setIsInstallModalOpen(true)}
-            className="hidden sm:flex h-9 px-2.5 rounded-lg bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/20 hover:bg-[#7B2FFF]/15 dark:hover:bg-[#7B2FFF]/30 text-[#7B2FFF] dark:text-[#a068ff] items-center gap-1.5 transition-all cursor-pointer active:scale-95 border border-[#7B2FFF]/30 shadow-2xs text-xs font-bold"
+            className="hidden md:flex h-9 px-2.5 rounded-lg bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/20 hover:bg-[#7B2FFF]/15 dark:hover:bg-[#7B2FFF]/30 text-[#7B2FFF] dark:text-[#a068ff] items-center gap-1.5 transition-all cursor-pointer active:scale-95 border border-[#7B2FFF]/30 shadow-2xs text-xs font-bold shrink-0"
             aria-label="Instalar Aplicativo"
             title="Instalar Qindica no celular ou computador"
           >
@@ -272,11 +272,11 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
             <span className="inline text-[11px]">Instalar App</span>
           </button>
 
-          {/* Dark Mode Toggle Button (Desktop & Tablet) */}
+          {/* Dark Mode Toggle Button (Desktop) */}
           <button
             id="theme-toggle-btn"
             onClick={toggleDarkMode}
-            className="hidden sm:flex w-9 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 items-center justify-center transition-all cursor-pointer active:scale-95 border border-neutral-200/60 dark:border-neutral-700/60 shadow-2xs"
+            className="hidden md:flex w-9 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 items-center justify-center transition-all cursor-pointer active:scale-95 border border-neutral-200/60 dark:border-neutral-700/60 shadow-2xs shrink-0"
             aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
             title={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
           >
@@ -289,11 +289,11 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
 
           {/* Auth Section: Logged In vs Logged Out */}
           {!isAuthenticated ? (
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 shrink-0">
               {/* Desktop links */}
               <button
                 onClick={() => navigate({ name: 'landing' })}
-                className="hidden md:inline-flex px-2.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 dark:text-neutral-400 hover:text-[#7B2FFF] dark:hover:text-[#a068ff] transition-colors cursor-pointer"
+                className="hidden lg:inline-flex px-2.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 dark:text-neutral-400 hover:text-[#7B2FFF] dark:hover:text-[#a068ff] transition-colors cursor-pointer"
               >
                 Sobre o App
               </button>
@@ -301,7 +301,7 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
               <button
                 id="topbar-login-btn-desktop"
                 onClick={() => openAuthModal('login')}
-                className="hidden sm:inline-flex px-3 py-1.5 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                className="hidden md:inline-flex px-3 py-1.5 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
               >
                 Entrar
               </button>
@@ -309,7 +309,7 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
               <button
                 id="topbar-signup-btn-desktop"
                 onClick={() => openAuthModal('register')}
-                className="hidden sm:inline-flex px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer items-center gap-1"
+                className="hidden md:inline-flex px-3.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer items-center gap-1 shrink-0"
               >
                 <LogIn size={13} strokeWidth={2.5} />
                 <span>Cadastrar</span>
@@ -319,14 +319,14 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
               <button
                 id="topbar-login-btn-mobile"
                 onClick={() => openAuthModal('login')}
-                className="sm:hidden px-3 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+                className="md:hidden px-2.5 py-1.5 rounded-lg bg-[#7B2FFF] hover:bg-[#6A23E3] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1 shrink-0"
               >
                 <LogIn size={13} strokeWidth={2.5} />
                 <span>Entrar</span>
               </button>
 
               {/* Mobile Menu Dropdown (PWA, Dark Mode, Register, About) */}
-              <div className="sm:hidden relative" ref={mobileMenuRef}>
+              <div className="md:hidden relative shrink-0" ref={mobileMenuRef}>
                 <button
                   id="topbar-mobile-menu-btn"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
