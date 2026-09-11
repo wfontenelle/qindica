@@ -113,7 +113,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           <text
             x="180"
             y="144"
-            fontFamily="'Nunito', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            fontFamily="'Nunito', 'Nunito Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             fontSize="120"
             fontWeight="900"
             letterSpacing="-2px"

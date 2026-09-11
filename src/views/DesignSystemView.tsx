@@ -845,45 +845,97 @@ export const DesignSystemView: React.FC = () => {
         {activeTab === 'typography' && (
           <section className="space-y-8">
             <div className="space-y-2">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#7B2FFF]">Escala Tipográfica</p>
-              <h2 className="text-2xl sm:text-3xl font-extrabold">Tipografia e Hierarquia de Leitura</h2>
-              <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
-                Uso prioritário de <strong>Inter</strong> e <strong>System UI</strong> (SF Pro / Roboto / Segoe UI) para renderização instantânea com zero bytes adicionais de download.
+              <p className="text-xs font-bold uppercase tracking-wider text-[#7B2FFF]">Escala Tipográfica Oficial</p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold">Tipografia & Famílias da Interface</h2>
+              <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-2xl">
+                O Qindica adota uma combinação harmônica e acolhedora: <strong>Nunito</strong> para todos os títulos, cabeçalhos e destaques de leitura; e <strong>Nunito Sans</strong> para o corpo do texto, botões, formulários e demais elementos da interface.
               </p>
+            </div>
+
+            {/* Typography Pairing Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/40 border-2 border-[#7B2FFF]/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono font-bold text-[#7B2FFF] dark:text-[#a068ff] uppercase tracking-wider">
+                    Títulos & Cabeçalhos
+                  </span>
+                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-[#7B2FFF]/10 text-[#7B2FFF] font-bold">
+                    Nunito
+                  </span>
+                </div>
+                <h3 className="text-xl font-black text-neutral-900 dark:text-white" style={{ fontFamily: "'Nunito', sans-serif" }}>
+                  Nunito (700 - 900)
+                </h3>
+                <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  Aplicada a todas as tags de cabeçalho (<code>h1</code>, <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>, <code>h6</code>), títulos de cards, nomes de profissionais e banners de destaque. As formas arredondadas conferem identidade acolhedora, humana e de extrema proximidade.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200 dark:border-neutral-700 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono font-bold text-neutral-500 uppercase tracking-wider">
+                    Corpo & Demais Elementos
+                  </span>
+                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold">
+                    Nunito Sans
+                  </span>
+                </div>
+                <p className="text-xl font-bold text-neutral-900 dark:text-white" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+                  Nunito Sans (300 - 700)
+                </p>
+                <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  Aplicada ao texto padrão de leitura (<code>body</code>), parágrafos, depoimentos, botões, chips, crachás de grau de proximidade, campos de busca e descrições. Traços firmes e geometria precisa para máxima nitidez em telas menores.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-6 p-6 sm:p-8 rounded-2xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200 dark:border-neutral-700">
               
               <div className="border-b border-neutral-200 dark:border-neutral-700 pb-6">
-                <span className="text-[11px] font-mono text-neutral-400 uppercase">Display Heading 1 (clamp 2rem - 3.25rem · font-black · tracking-tight)</span>
-                <p className="text-3xl sm:text-4xl font-black tracking-tight mt-1 text-neutral-900 dark:text-white">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-mono text-neutral-400 uppercase">Display Heading 1 (Nunito · font-black · tracking-tight)</span>
+                  <span className="text-[10px] font-mono text-[#7B2FFF] font-bold">Nunito</span>
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white">
                   Onde as indicações têm um endereço
-                </p>
+                </h1>
               </div>
 
               <div className="border-b border-neutral-200 dark:border-neutral-700 pb-6">
-                <span className="text-[11px] font-mono text-neutral-400 uppercase">Section Heading 2 (text-2xl / sm:text-3xl · font-extrabold)</span>
-                <p className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1 text-neutral-900 dark:text-white">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-mono text-neutral-400 uppercase">Section Heading 2 (Nunito · font-extrabold)</span>
+                  <span className="text-[10px] font-mono text-[#7B2FFF] font-bold">Nunito</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white">
                   Quanto mais perto, mais confiável
-                </p>
+                </h2>
               </div>
 
               <div className="border-b border-neutral-200 dark:border-neutral-700 pb-6">
-                <span className="text-[11px] font-mono text-neutral-400 uppercase">Card Title / Name (text-base · font-bold)</span>
-                <p className="text-base font-bold mt-1 text-neutral-900 dark:text-white">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-mono text-neutral-400 uppercase">Card Title / Name (Nunito · font-bold)</span>
+                  <span className="text-[10px] font-mono text-[#7B2FFF] font-bold">Nunito</span>
+                </div>
+                <h3 className="text-base font-bold text-neutral-900 dark:text-white">
                   Ana Ribeiro · Diarista e Passadeira
-                </p>
+                </h3>
               </div>
 
               <div className="border-b border-neutral-200 dark:border-neutral-700 pb-6">
-                <span className="text-[11px] font-mono text-neutral-400 uppercase">Body Regular (text-xs / sm:text-sm · line-height 1.6)</span>
-                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mt-1 max-w-xl">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-mono text-neutral-400 uppercase">Body Regular (Nunito Sans · text-xs / sm:text-sm · line-height 1.6)</span>
+                  <span className="text-[10px] font-mono text-neutral-500 font-bold">Nunito Sans</span>
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-xl">
                   Encontre diaristas, eletricistas, babás e qualquer serviço por quem você já conhece. Sem algoritmos cobrando por lead. Não por quem pagou pra aparecer.
                 </p>
               </div>
 
               <div>
-                <span className="text-[11px] font-mono text-neutral-400 uppercase">Micro Labels & Badges (text-[11px] · font-bold · uppercase)</span>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-mono text-neutral-400 uppercase">Micro Labels & Badges (Nunito Sans · font-extrabold · uppercase)</span>
+                  <span className="text-[10px] font-mono text-neutral-500 font-bold">Nunito Sans</span>
+                </div>
                 <div className="flex items-center gap-2 mt-2">
                   <span className="px-2 py-0.5 rounded bg-[#7B2FFF]/15 text-[#7B2FFF] text-[10px] font-extrabold">1º GRAU</span>
                   <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 text-[10px] font-extrabold">WHATSAPP VERIFICADO</span>
