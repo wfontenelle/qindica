@@ -50,13 +50,18 @@ export const DesignSystemView: React.FC = () => {
   const { navigate, users, isDarkMode, toggleDarkMode } = useApp();
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
   const [copiedIcon, setCopiedIcon] = useState<string | null>(null);
+  const [copiedLogoCode, setCopiedLogoCode] = useState<boolean>(false);
+  const [logoVariant, setLogoVariant] = useState<'full' | 'symbol'>('full');
+  const [logoTheme, setLogoTheme] = useState<'purple' | 'light' | 'dark'>('purple');
+  const [logoSize, setLogoSize] = useState<'sm' | 'md' | 'lg' | 'xl'>('lg');
+  const [logoTagline, setLogoTagline] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<'brand' | 'colors' | 'typography' | 'icons' | 'components' | 'voice'>('brand');
 
   const tabs = [
-    { id: 'brand' as const, num: '1', label: 'Conceito & Naming', shortLabel: 'Conceito', icon: Compass },
+    { id: 'brand' as const, num: '1', label: 'Logotipo & Marca', shortLabel: 'Logotipo', icon: Sparkles },
     { id: 'colors' as const, num: '2', label: 'Cores & Tokens', shortLabel: 'Cores', icon: Palette },
     { id: 'typography' as const, num: '3', label: 'Tipografia & Escala', shortLabel: 'Tipografia', icon: Type },
-    { id: 'icons' as const, num: '4', label: 'Iconografia (Lucide)', shortLabel: 'Ícones Lucide', icon: Sparkles },
+    { id: 'icons' as const, num: '4', label: 'Iconografia (Lucide)', shortLabel: 'Ícones Lucide', icon: Compass },
     { id: 'components' as const, num: '5', label: 'Componentes Chave', shortLabel: 'Componentes', icon: Layers },
     { id: 'voice' as const, num: '6', label: 'Tom de Voz', shortLabel: 'Tom de Voz', icon: HeartHandshake },
   ];
@@ -182,10 +187,14 @@ export const DesignSystemView: React.FC = () => {
             >
               <ArrowLeft size={18} />
             </button>
-            <div className="flex items-center gap-1.5 sm:gap-2 truncate">
-              <span className="text-lg font-black tracking-tight shrink-0">
-                <span className="text-[#7B2FFF]">Qi</span>ndica
-              </span>
+            <div className="flex items-center gap-2.5 truncate">
+              <button
+                onClick={() => navigate({ name: 'landing' })}
+                className="cursor-pointer hover:opacity-90 transition-opacity flex items-center shrink-0"
+                title="Ir para o início"
+              >
+                <BrandLogo variant="full" theme={isDarkMode ? 'dark' : 'light'} size="sm" />
+              </button>
               <span className="text-xs px-2 py-0.5 rounded-md bg-[#7B2FFF]/10 text-[#7B2FFF] dark:text-[#a068ff] font-bold shrink-0">
                 <span className="inline sm:hidden">BDS</span>
                 <span className="hidden sm:inline">BDS · Brand & Design System</span>
@@ -312,120 +321,194 @@ export const DesignSystemView: React.FC = () => {
       {/* Main Content Areas based on Active Tab */}
       <main id="design-system-content" className="py-12 px-6 sm:px-8 lg:px-12 max-w-6xl mx-auto space-y-16">
 
-        {/* TAB 1: BRAND CONCEPT & STORYTELLING */}
+        {/* TAB 1: LOGO & BRAND IDENTITY */}
         {activeTab === 'brand' && (
-          <section className="space-y-8">
+          <section className="space-y-12">
+            {/* Tab Header */}
             <div className="space-y-2">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#7B2FFF]">Fundamentos de Marca</p>
-              <h2 className="text-2xl sm:text-3xl font-extrabold">O Conceito do "QI" Recontextualizado</h2>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7B2FFF]/10 text-[#7B2FFF] dark:text-[#a068ff] text-xs font-bold">
+                <Sparkles size={13} />
+                Identidade Visual & Logomarca
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold">Logotipo, Símbolo & Identidade Visual</h2>
+              <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl">
+                O ecossistema visual do Qindica funde as letras <strong>Q</strong> e <strong>i</strong> coroando a assinatura com a <strong>estrela dourada (#FFA800)</strong>, símbolo da recomendação de mérito e confiança mútua.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950/40 text-red-600 flex items-center justify-center font-black">
-                  QI
-                </div>
-                <h3 className="text-base font-bold text-neutral-900 dark:text-white">
-                  O "QI" do privilégio corporativo (O passado)
-                </h3>
-                <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                  No mercado formal tradicional de escritórios, o "Quem Indica" sempre representou a antítese da meritocracia: nepotismo, vagas decididas a portas fechadas e exclusão de talentos periféricos que não frequentam certos círculos sociais.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/15 border-2 border-[#7B2FFF]/30 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#7B2FFF] text-white flex items-center justify-center font-black">
-                  ★
-                </div>
-                <h3 className="text-base font-bold text-[#7B2FFF] dark:text-[#a068ff]">
-                  O "Qindica" da confiança real (A solução)
-                </h3>
-                <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                  No trabalho autônomo e de serviços (diaristas, pedreiros, babás, eletricistas), a indicação é o inverso do nepotismo: é a <strong>garantia de segurança física e respeito mútuo</strong>. Ninguém bota um desconhecido dentro de casa para cuidar dos filhos sem a palavra de alguém de confiança.
-                </p>
-              </div>
-            </div>
-
-            {/* Core Product Pillars */}
-            <div className="p-8 rounded-3xl bg-neutral-900 text-white space-y-6">
-              <h3 className="text-xl font-bold">Os Três Pilares de UX do Qindica</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] text-white flex items-center justify-center text-xs font-bold">
-                    01
-                  </div>
-                  <h4 className="text-sm font-bold">Confiança Explícita</h4>
-                  <p className="text-xs text-neutral-400 leading-relaxed">
-                    Você sempre sabe <strong>quem</strong> indicou o profissional. Sem avaliações anônimas de 5 estrelas compradas em massa.
+            {/* Interactive Logo Playground */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-800 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#7B2FFF]" />
+                    Playground Interativo do Componente &lt;BrandLogo /&gt;
+                  </h3>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                    Alterne variantes, temas, tamanhos e tags para testar a renderização em tempo real.
                   </p>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] text-white flex items-center justify-center text-xs font-bold">
-                    02
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      const code = `<BrandLogo variant="${logoVariant}" theme="${logoTheme}" size="${logoSize}" ${logoVariant === 'full' && !logoTagline ? 'showTagline={false}' : ''} />`;
+                      navigator.clipboard?.writeText(code);
+                      setCopiedLogoCode(true);
+                      setTimeout(() => setCopiedLogoCode(false), 2000);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-200/80 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-800 dark:text-neutral-200 text-xs font-semibold transition cursor-pointer active:scale-95"
+                  >
+                    {copiedLogoCode ? <Check size={13} className="text-emerald-500" /> : <Code2 size={13} />}
+                    <span>{copiedLogoCode ? 'Código Copiado!' : 'Copiar JSX'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Controls bar */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 text-xs">
+                {/* Variant */}
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Variante</label>
+                  <div className="flex rounded-lg bg-neutral-100 dark:bg-neutral-800 p-0.5">
+                    <button
+                      onClick={() => setLogoVariant('full')}
+                      className={`flex-1 py-1 px-2 rounded-md font-bold transition text-center cursor-pointer ${
+                        logoVariant === 'full' ? 'bg-white dark:bg-neutral-700 text-[#7B2FFF] shadow-xs' : 'text-neutral-600 dark:text-neutral-400'
+                      }`}
+                    >
+                      Completa
+                    </button>
+                    <button
+                      onClick={() => setLogoVariant('symbol')}
+                      className={`flex-1 py-1 px-2 rounded-md font-bold transition text-center cursor-pointer ${
+                        logoVariant === 'symbol' ? 'bg-white dark:bg-neutral-700 text-[#7B2FFF] shadow-xs' : 'text-neutral-600 dark:text-neutral-400'
+                      }`}
+                    >
+                      Símbolo Qi
+                    </button>
                   </div>
-                  <h4 className="text-sm font-bold">Zero Taxa sobre o Trabalho</h4>
-                  <p className="text-xs text-neutral-400 leading-relaxed">
-                    Nenhum profissional paga para receber contatos. Não cobramos R$ 40 por telefone de cliente como fazem os marketplaces tradicionais.
-                  </p>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] text-white flex items-center justify-center text-xs font-bold">
-                    03
+                {/* Theme */}
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Tema</label>
+                  <div className="flex rounded-lg bg-neutral-100 dark:bg-neutral-800 p-0.5">
+                    <button
+                      onClick={() => setLogoTheme('purple')}
+                      className={`flex-1 py-1 px-1.5 rounded-md font-bold transition text-center cursor-pointer ${
+                        logoTheme === 'purple' ? 'bg-[#7B2FFF] text-white shadow-xs' : 'text-neutral-600 dark:text-neutral-400'
+                      }`}
+                    >
+                      Roxo
+                    </button>
+                    <button
+                      onClick={() => setLogoTheme('light')}
+                      className={`flex-1 py-1 px-1.5 rounded-md font-bold transition text-center cursor-pointer ${
+                        logoTheme === 'light' ? 'bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white shadow-xs' : 'text-neutral-600 dark:text-neutral-400'
+                      }`}
+                    >
+                      Claro
+                    </button>
+                    <button
+                      onClick={() => setLogoTheme('dark')}
+                      className={`flex-1 py-1 px-1.5 rounded-md font-bold transition text-center cursor-pointer ${
+                        logoTheme === 'dark' ? 'bg-neutral-900 text-white shadow-xs' : 'text-neutral-600 dark:text-neutral-400'
+                      }`}
+                    >
+                      Escuro
+                    </button>
                   </div>
-                  <h4 className="text-sm font-bold">Leveza e Inclusão</h4>
-                  <p className="text-xs text-neutral-400 leading-relaxed">
-                    Funciona perfeitamente em aparelhos Android de entrada com pouca memória. Abre direto no navegador e se instala como PWA sem ocupar espaço.
-                  </p>
+                </div>
+
+                {/* Size */}
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Escala (Size)</label>
+                  <div className="grid grid-cols-4 rounded-lg bg-neutral-100 dark:bg-neutral-800 p-0.5 text-center">
+                    {(['sm', 'md', 'lg', 'xl'] as const).map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => setLogoSize(s)}
+                        className={`py-1 rounded-md font-bold uppercase transition cursor-pointer ${
+                          logoSize === s ? 'bg-white dark:bg-neutral-700 text-[#7B2FFF] shadow-xs' : 'text-neutral-600 dark:text-neutral-400'
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tagline toggle */}
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Assinatura</label>
+                  <button
+                    onClick={() => setLogoTagline(!logoTagline)}
+                    disabled={logoVariant === 'symbol'}
+                    className={`w-full py-1.5 px-2.5 rounded-lg font-bold transition text-center cursor-pointer border ${
+                      logoVariant === 'symbol'
+                        ? 'opacity-40 cursor-not-allowed border-neutral-200 dark:border-neutral-800 text-neutral-400'
+                        : logoTagline
+                        ? 'bg-[#7B2FFF]/10 border-[#7B2FFF]/40 text-[#7B2FFF] dark:text-[#a068ff]'
+                        : 'bg-neutral-100 dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400'
+                    }`}
+                  >
+                    {logoTagline ? 'Com Tagline' : 'Sem Tagline'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Stage Preview Box */}
+              <div
+                className={`min-h-[180px] sm:min-h-[220px] rounded-2xl flex flex-col items-center justify-center p-8 transition-colors border ${
+                  logoTheme === 'purple'
+                    ? 'bg-[#7B2FFF] border-[#6916EE] text-white'
+                    : logoTheme === 'dark'
+                    ? 'bg-[#0F0F12] border-neutral-800 text-white'
+                    : 'bg-white border-neutral-200 text-neutral-900 shadow-inner'
+                }`}
+              >
+                <div className="p-4 rounded-xl transition-transform duration-200">
+                  <BrandLogo
+                    variant={logoVariant}
+                    theme={logoTheme}
+                    size={logoSize}
+                    showTagline={logoTagline}
+                  />
+                </div>
+
+                <div className="mt-4 flex items-center gap-3 text-[11px] font-mono opacity-80">
+                  <span>variant="{logoVariant}"</span>
+                  <span>·</span>
+                  <span>theme="{logoTheme}"</span>
+                  <span>·</span>
+                  <span>size="{logoSize}"</span>
+                  {logoVariant === 'full' && (
+                    <>
+                      <span>·</span>
+                      <span>showTagline={String(logoTagline)}</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Official Brand Logos & Asset Kit */}
-            <div className="space-y-4 pt-2">
+            {/* Official SVG Asset Cards */}
+            <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-200 dark:border-neutral-800 pb-3">
                 <div>
                   <h3 className="text-xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-[#7B2FFF]" />
-                    Kit Oficial de Logos & Identidade Visual
+                    Kit Oficial de Arquivos Vetoriais (.SVG)
                   </h3>
                   <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
-                    Arquivos SVG vetoriais oficiais para uso no produto, redes sociais (Instagram/LinkedIn) e materiais gráficos.
+                    Arquivos vetorizados oficiais com margem de segurança ajustada (22% de respiro no símbolo) prontos para download.
                   </p>
-                </div>
-              </div>
-
-              {/* Anatomy and Symbol Description */}
-              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200 dark:border-neutral-700 flex flex-col md:flex-row items-center gap-6">
-                <div className="w-24 h-24 rounded-2xl bg-[#7B2FFF] p-4 flex items-center justify-center shrink-0 shadow-lg shadow-[#7B2FFF]/30">
-                  <BrandLogo variant="symbol" theme="purple" size="custom" className="w-full h-full" />
-                </div>
-                <div className="space-y-2 text-xs leading-relaxed">
-                  <h4 className="text-sm font-bold text-neutral-900 dark:text-white">
-                    Anatomia do Símbolo & Tipografia
-                  </h4>
-                  <p className="text-neutral-600 dark:text-neutral-300">
-                    O símbolo funde as letras <strong>Q</strong> e <strong>i</strong> em uma assinatura gráfica única. 
-                    O pingo tradicional da letra <code className="text-[#7B2FFF] font-bold">i</code> é substituído por uma <strong>estrela dourada de 5 pontas (#FFA800)</strong>, 
-                    simbolizando a nota máxima de recomendação, o reconhecimento do trabalho bem feito e a iluminação da confiança humana.
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <span className="px-2 py-0.5 rounded-md bg-[#7B2FFF]/10 text-[#7B2FFF] font-semibold text-[11px]">
-                      Roxo Oficial: #7B2FFF
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold text-[11px]">
-                      Estrela de Confiança: #FFA800
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-neutral-200/80 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 font-semibold text-[11px]">
-                      Tipografia Geométrica Suave
-                    </span>
-                  </div>
                 </div>
               </div>
 
               {/* Grid of the 6 official SVG variants */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
                   {
                     name: 'PurpleBgFull.svg',
@@ -434,38 +517,43 @@ export const DesignSystemView: React.FC = () => {
                     file: '/logos/PurpleBgFull.svg',
                     bg: 'bg-[#7B2FFF]',
                     type: 'full' as const,
+                    theme: 'purple' as const,
                   },
                   {
                     name: 'WhiteBgFull.svg',
                     title: 'Versão Completa · Fundo Claro',
                     desc: 'Padrão principal para cabeçalhos, documentos claros e posts com fundo branco.',
                     file: '/logos/WhiteBgFull.svg',
-                    bg: 'bg-white border border-neutral-200',
+                    bg: 'bg-white border-b border-neutral-200',
                     type: 'full' as const,
+                    theme: 'light' as const,
                   },
                   {
                     name: 'BlackBgFull.svg',
                     title: 'Versão Completa · Fundo Escuro',
-                    desc: 'Versão de alto contraste para interfaces dark mode, displays OLED e fundos pretos.',
+                    desc: 'Versão de alto contraste para interfaces dark mode, displays OLED e fundos escuros.',
                     file: '/logos/BlackBgFull.svg',
                     bg: 'bg-[#0F0F12]',
                     type: 'full' as const,
+                    theme: 'dark' as const,
                   },
                   {
                     name: 'PurpleBgSymbol.svg',
                     title: 'Símbolo Qi · Fundo Roxo',
-                    desc: 'Ícone de aplicativo, avatar de redes sociais e favicon oficial.',
+                    desc: 'Ícone de aplicativo, avatar de redes sociais e favicon oficial com margem segura.',
                     file: '/logos/PurpleBgSymbol.svg',
                     bg: 'bg-[#7B2FFF]',
                     type: 'symbol' as const,
+                    theme: 'purple' as const,
                   },
                   {
                     name: 'WhiteBgSymbol.svg',
                     title: 'Símbolo Qi · Fundo Claro',
                     desc: 'Símbolo compacto para layouts de navegação claros e botões pequenos.',
                     file: '/logos/WhiteBgSymbol.svg',
-                    bg: 'bg-white border border-neutral-200',
+                    bg: 'bg-white border-b border-neutral-200',
                     type: 'symbol' as const,
+                    theme: 'light' as const,
                   },
                   {
                     name: 'BlackBgSymbol.svg',
@@ -474,22 +562,26 @@ export const DesignSystemView: React.FC = () => {
                     file: '/logos/BlackBgSymbol.svg',
                     bg: 'bg-[#0F0F12]',
                     type: 'symbol' as const,
+                    theme: 'dark' as const,
                   },
                 ].map((asset) => (
                   <div
                     key={asset.name}
-                    className="flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs hover:border-[#7B2FFF]/50 transition-all"
+                    className="flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs hover:border-[#7B2FFF]/60 hover:shadow-md transition-all"
                   >
-                    {/* Visual Preview Box */}
-                    <div className={`h-36 ${asset.bg} flex items-center justify-center p-6 relative select-none`}>
-                      <img
-                        src={asset.file}
-                        alt={asset.title}
-                        className={asset.type === 'symbol' ? 'h-16 w-16 object-contain' : 'h-10 max-w-[85%] object-contain'}
-                        referrerPolicy="no-referrer"
-                      />
+                    {/* Visual Preview Box using BrandLogo component to ensure instant rendering */}
+                    <div className={`h-40 ${asset.bg} flex items-center justify-center p-6 relative select-none`}>
+                      {asset.type === 'symbol' ? (
+                        <div className="w-16 h-16 flex items-center justify-center">
+                          <BrandLogo variant="symbol" theme={asset.theme} size="custom" className="w-full h-full" />
+                        </div>
+                      ) : (
+                        <div className="max-w-[85%] flex items-center justify-center">
+                          <BrandLogo variant="full" theme={asset.theme} size="lg" />
+                        </div>
+                      )}
                       <span className="absolute top-2.5 right-2.5 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/40 text-white backdrop-blur-xs">
-                        SVG
+                        SVG VETORIAL
                       </span>
                     </div>
 
@@ -511,7 +603,7 @@ export const DesignSystemView: React.FC = () => {
                         <a
                           href={asset.file}
                           download={asset.name}
-                          className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-[#7B2FFF] hover:bg-[#6820df] text-white text-xs font-semibold active:scale-95 transition-all shadow-xs"
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#7B2FFF] hover:bg-[#6820df] text-white text-xs font-bold active:scale-95 transition-all shadow-xs cursor-pointer"
                         >
                           <Download size={13} />
                           <span>Baixar SVG</span>
@@ -519,11 +611,11 @@ export const DesignSystemView: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => {
-                            navigator.clipboard.writeText(asset.file);
+                            navigator.clipboard?.writeText(asset.file);
                             setCopiedIcon(asset.name);
                             setTimeout(() => setCopiedIcon(null), 2000);
                           }}
-                          className="px-2.5 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 text-xs font-medium active:scale-95 transition-colors"
+                          className="px-2.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 text-xs font-medium active:scale-95 transition-colors cursor-pointer"
                           title="Copiar caminho do arquivo"
                         >
                           {copiedIcon === asset.name ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
@@ -532,6 +624,125 @@ export const DesignSystemView: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Safe Margin (Clear Space) & Geometry Specs */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-neutral-900 text-white space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-800 pb-4">
+                <div>
+                  <h3 className="text-lg font-bold flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-[#7B2FFF]" />
+                    Área de Proteção & Margem de Respiro (22%)
+                  </h3>
+                  <p className="text-xs text-neutral-400 mt-0.5">
+                    Especificações técnicas para garantir que o símbolo nunca encoste nas bordas nem seja cortado por máscaras do Android ou iOS.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                {/* Visual diagram */}
+                <div className="p-6 rounded-2xl bg-black/40 border border-neutral-800 flex items-center justify-center">
+                  <div className="relative w-44 h-44 rounded-3xl bg-[#7B2FFF] flex items-center justify-center border-2 border-dashed border-white/40">
+                    <div className="absolute inset-4 rounded-2xl border border-dotted border-white/60 pointer-events-none flex items-center justify-center">
+                      <span className="absolute -top-2.5 bg-neutral-900 px-1 text-[9px] font-mono text-white/80">
+                        Safe Zone (22% Margem)
+                      </span>
+                    </div>
+                    <div className="w-24 h-24 flex items-center justify-center">
+                      <BrandLogo variant="symbol" theme="purple" size="custom" className="w-full h-full" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-xs leading-relaxed text-neutral-300">
+                  <h4 className="text-sm font-bold text-white">Regras de Aplicação do Símbolo</h4>
+                  <ul className="space-y-2 list-disc list-inside">
+                    <li>
+                      <strong>Margem Interna de Respiro:</strong> O glifo do Qi ocupa 70% da caixa delimitadora, reservando 15% a 22% de margem livre em todos os lados.
+                    </li>
+                    <li>
+                      <strong>Compatibilidade com Ícones Mobile:</strong> Em ícones redondos do Android e esquilos (squircles) do iOS, os 4 cantos da caixa podem ser cortados pelo sistema sem atingir a estrela ou a cauda do Q.
+                    </li>
+                    <li>
+                      <strong>Tamanhos Mínimos:</strong> Para telas digitais, o símbolo não deve ser aplicado em tamanho menor que <strong>24x24px</strong>. A logo completa deve ter no mínimo <strong>110px de largura</strong>.
+                    </li>
+                    <li>
+                      <strong>Cores Proibidas:</strong> Nunca altere a cor da estrela para tons frios (azul, verde); a estrela deve ser sempre dourada (<code className="text-amber-400">#FFA800</code>) ou branca quando sobre fundos de contraste absoluto.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Storytelling & Foundations: O Conceito do QI */}
+            <div className="space-y-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+              <div className="space-y-1">
+                <p className="text-xs font-bold uppercase tracking-wider text-[#7B2FFF]">Fundamentos de Marca</p>
+                <h3 className="text-xl sm:text-2xl font-extrabold">O Conceito do "QI" Recontextualizado</h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950/40 text-red-600 flex items-center justify-center font-black">
+                    QI
+                  </div>
+                  <h4 className="text-base font-bold text-neutral-900 dark:text-white">
+                    O "QI" do privilégio corporativo (O passado)
+                  </h4>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    No mercado formal tradicional de escritórios, o "Quem Indica" sempre representou a antítese da meritocracia: nepotismo, vagas decididas a portas fechadas e exclusão de talentos periféricos que não frequentam certos círculos sociais.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-[#7B2FFF]/10 dark:bg-[#7B2FFF]/15 border-2 border-[#7B2FFF]/30 space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#7B2FFF] text-white flex items-center justify-center font-black">
+                    ★
+                  </div>
+                  <h4 className="text-base font-bold text-[#7B2FFF] dark:text-[#a068ff]">
+                    O "Qindica" da confiança real (A solução)
+                  </h4>
+                  <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                    No trabalho autônomo e de serviços (diaristas, pedreiros, babás, eletricistas), a indicação é o inverso do nepotismo: é a <strong>garantia de segurança física e respeito mútuo</strong>. Ninguém bota um desconhecido dentro de casa para cuidar dos filhos sem a palavra de alguém de confiança.
+                  </p>
+                </div>
+              </div>
+
+              {/* Core Product Pillars */}
+              <div className="p-8 rounded-3xl bg-neutral-900 text-white space-y-6 mt-6">
+                <h4 className="text-xl font-bold">Os Três Pilares de UX do Qindica</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] text-white flex items-center justify-center text-xs font-bold">
+                      01
+                    </div>
+                    <h5 className="text-sm font-bold">Confiança Explícita</h5>
+                    <p className="text-xs text-neutral-400 leading-relaxed">
+                      Você sempre sabe <strong>quem</strong> indicou o profissional. Sem avaliações anônimas de 5 estrelas compradas em massa.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] text-white flex items-center justify-center text-xs font-bold">
+                      02
+                    </div>
+                    <h5 className="text-sm font-bold">Zero Taxa sobre o Trabalho</h5>
+                    <p className="text-xs text-neutral-400 leading-relaxed">
+                      Nenhum profissional paga para receber contatos. Não cobramos R$ 40 por telefone de cliente como fazem os marketplaces tradicionais.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] text-white flex items-center justify-center text-xs font-bold">
+                      03
+                    </div>
+                    <h5 className="text-sm font-bold">Leveza e Inclusão</h5>
+                    <p className="text-xs text-neutral-400 leading-relaxed">
+                      Funciona perfeitamente em aparelhos Android de entrada com pouca memória. Abre direto no navegador e se instala como PWA sem ocupar espaço.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -899,6 +1110,41 @@ export const DesignSystemView: React.FC = () => {
               <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                 Padrões reutilizáveis que compõem as telas de busca, perfil e exploração do Qindica.
               </p>
+            </div>
+
+            {/* Component 1: BrandLogo */}
+            <div className="space-y-4 p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                    <Sparkles size={16} className="text-[#7B2FFF]" />
+                    BrandLogo (Assinatura Oficial da Marca)
+                  </h3>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    Componente React oficial para exibição responsiva da logo completa ou símbolo isolado.
+                  </p>
+                </div>
+                <code className="text-[11px] font-mono font-bold text-[#7B2FFF] bg-[#7B2FFF]/10 px-2 py-1 rounded">
+                  &lt;BrandLogo /&gt;
+                </code>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex flex-col items-center justify-center gap-3">
+                  <span className="text-[10px] font-mono text-neutral-400 font-bold uppercase">Variant: Full · Light</span>
+                  <BrandLogo variant="full" theme="light" size="md" />
+                </div>
+                <div className="p-4 rounded-xl bg-[#7B2FFF] text-white flex flex-col items-center justify-center gap-3 shadow-md shadow-[#7B2FFF]/20">
+                  <span className="text-[10px] font-mono text-white/70 font-bold uppercase">Variant: Full · Purple</span>
+                  <BrandLogo variant="full" theme="purple" size="md" />
+                </div>
+                <div className="p-4 rounded-xl bg-[#0F0F12] text-white flex flex-col items-center justify-center gap-3">
+                  <span className="text-[10px] font-mono text-white/70 font-bold uppercase">Variant: Symbol · Dark</span>
+                  <div className="w-12 h-12 flex items-center justify-center">
+                    <BrandLogo variant="symbol" theme="dark" size="custom" className="w-full h-full" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Live UserCard Demo */}
