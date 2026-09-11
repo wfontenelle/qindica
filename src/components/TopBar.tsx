@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { PWAInstallModal } from './PWAInstallModal';
+import { BrandLogo } from './BrandLogo';
 
 interface TopBarProps {
   showBack?: boolean;
@@ -110,19 +111,10 @@ export const TopBar: React.FC<TopBarProps> = ({ showBack, titleOverride }) => {
           <button
             id="topbar-brand-btn"
             onClick={() => navigate({ name: 'home' })}
-            className="flex items-center gap-2 focus:outline-none group active:scale-98 transition-transform cursor-pointer"
+            className="flex items-center focus:outline-none group active:scale-98 transition-transform cursor-pointer"
+            aria-label="Página Inicial Qindica"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#7B2FFF] flex items-center justify-center text-white font-black text-lg shadow-sm group-hover:bg-[#6A23E3] transition-colors">
-              Q
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-neutral-900 dark:text-white leading-none">
-                Qi<span className="text-[#7B2FFF]">ndica</span>
-              </span>
-              <span className="hidden md:inline text-[10px] font-semibold text-neutral-400 dark:text-neutral-500 leading-none mt-0.5">
-                Rede de Indicações
-              </span>
-            </div>
+            <BrandLogo variant="full" theme="auto" size="custom" className="h-7 sm:h-8 w-auto" />
           </button>
         </div>
 

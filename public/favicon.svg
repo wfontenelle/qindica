@@ -1,23 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
     <linearGradient id="qGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8E44FF" />
+      <stop offset="0%" stop-color="#8236FF" />
       <stop offset="100%" stop-color="#6916EE" />
     </linearGradient>
   </defs>
   
-  <!-- Rounded Base Badge (matches the app's refined corner radius) -->
+  <!-- Rounded Base Badge with ample safe padding -->
   <rect width="512" height="512" rx="116" fill="url(#qGrad)" />
   
-  <!-- Subtle inner border highlight for crispness -->
-  <rect x="10" y="10" width="492" height="492" rx="106" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="10" />
-
-  <!-- Outer circle of Q lettermark -->
-  <circle cx="248" cy="238" r="118" fill="none" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round" />
-  
-  <!-- Distinctive bold tail of Q -->
-  <path d="M 290 280 L 366 356" stroke="#FFFFFF" stroke-width="50" stroke-linecap="round" />
-  
-  <!-- Golden Trust Star -->
-  <polygon points="370,105 382,130 410,134 389,153 395,180 370,166 345,180 351,153 330,134 358,130" fill="#FBBF24" />
+  <g transform="translate(256, 256) scale(0.72) translate(-245, -238)">
+    <!-- Letter Q -->
+    <path d="M 174 92 C 84 92 25 151 25 240 C 25 330 84 389 174 389 C 201 389 226.5 381.8 248.8 368.7 L 296.4 416.3 C 305.1 425 319.4 425 328.1 416.3 C 336.8 407.6 336.8 393.3 328.1 384.6 L 281.8 338.3 C 304.3 313 317.5 279 317.5 240 C 317.5 151 258.5 92 174 92 Z M 174 153.5 C 222 153.5 253.5 190.5 253.5 240 C 253.5 268.6 240.2 293.7 218.7 308 L 202.8 292.1 C 194.1 283.4 179.8 283.4 171.1 292.1 C 162.4 300.8 162.4 315.1 171.1 323.8 L 182.3 335 C 179.5 336.3 177 337 174 337 C 126 337 89.8 289 89.8 240 C 89.8 191 126 153.5 174 153.5 Z" fill="#FFFFFF" />
+    
+    <!-- Letter i stem -->
+    <rect x="368" y="230" width="56" height="158" rx="28" fill="#FFFFFF" />
+    
+    <!-- Star dot on top of i -->
+    <path d="M 396 61 C 399 61 401.8 63 402.8 66 L 417.6 105.5 L 459.2 108.3 C 462.5 108.5 465.3 111 466.1 114.3 C 467.1 117.6 465.8 120.9 463 122.9 L 430.9 147.9 L 441.6 188.7 C 442.4 192 441.1 195.3 438.3 197.3 C 435.5 199.4 431.9 199.4 429.1 197.1 L 396 173.6 L 362.9 197.1 C 360.1 199.4 356.5 199.4 353.7 197.3 C 350.9 195.3 349.6 192 350.4 188.7 L 361.1 147.9 L 329 122.9 C 326.2 120.9 324.9 117.6 325.9 114.3 C 326.7 111 329.5 108.5 332.8 108.3 L 374.4 105.5 L 389.2 66 C 390.2 63 393 61 396 61 Z" fill="#FFA800" stroke="#FFA800" stroke-width="10" stroke-linejoin="round" />
+  </g>
 </svg>

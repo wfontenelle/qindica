@@ -13,6 +13,7 @@ import { AuthView } from './views/AuthView';
 import { LandingView } from './views/LandingView';
 import { DesignSystemView } from './views/DesignSystemView';
 import { SplashScreen } from './components/SplashScreen';
+import { BrandLogo } from './components/BrandLogo';
 import { AnimatePresence, motion } from 'motion/react';
 import { ShieldCheck } from 'lucide-react';
 
@@ -116,7 +117,7 @@ const MainNavigator: React.FC = () => {
       {!isSpecialView && (
         <footer className="w-full max-w-6xl mx-auto px-4 py-6 mt-auto border-t border-neutral-200/60 dark:border-neutral-800/60 text-center flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-400 dark:text-neutral-500">
           <div className="flex flex-wrap items-center justify-center gap-2 font-medium">
-            <span className="font-bold text-neutral-700 dark:text-neutral-300">Qindica</span>
+            <BrandLogo variant="full" theme="auto" size="custom" className="h-5 w-auto" />
             <span>•</span>
             <button
               onClick={() => navigate({ name: 'landing' })}

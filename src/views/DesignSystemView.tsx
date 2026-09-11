@@ -6,6 +6,7 @@ import {
   Star, 
   Sparkles, 
   ArrowLeft, 
+  ArrowRight,
   Copy, 
   Check, 
   MapPin, 
@@ -19,10 +20,23 @@ import {
   CheckCircle2,
   Share2,
   Sun,
-  Moon
+  Moon,
+  MessageCircle,
+  Award,
+  Search,
+  Lock,
+  Briefcase,
+  Calendar,
+  BadgeCheck,
+  ExternalLink,
+  Code2,
+  Info,
+  Link as LinkIcon,
+  Download
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { UserCard } from '../components/UserCard';
+import { BrandLogo } from '../components/BrandLogo';
 
 interface ColorToken {
   name: string;
@@ -35,13 +49,94 @@ interface ColorToken {
 export const DesignSystemView: React.FC = () => {
   const { navigate, users, isDarkMode, toggleDarkMode } = useApp();
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'brand' | 'colors' | 'typography' | 'components' | 'voice'>('brand');
+  const [copiedIcon, setCopiedIcon] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'brand' | 'colors' | 'typography' | 'icons' | 'components' | 'voice'>('brand');
+
+  const tabs = [
+    { id: 'brand' as const, num: '1', label: 'Conceito & Naming', shortLabel: 'Conceito', icon: Compass },
+    { id: 'colors' as const, num: '2', label: 'Cores & Tokens', shortLabel: 'Cores', icon: Palette },
+    { id: 'typography' as const, num: '3', label: 'Tipografia & Escala', shortLabel: 'Tipografia', icon: Type },
+    { id: 'icons' as const, num: '4', label: 'Iconografia (Lucide)', shortLabel: 'Ícones Lucide', icon: Sparkles },
+    { id: 'components' as const, num: '5', label: 'Componentes Chave', shortLabel: 'Componentes', icon: Layers },
+    { id: 'voice' as const, num: '6', label: 'Tom de Voz', shortLabel: 'Tom de Voz', icon: HeartHandshake },
+  ];
+
+  const currentTabIndex = tabs.findIndex((t) => t.id === activeTab);
+  const prevTab = currentTabIndex > 0 ? tabs[currentTabIndex - 1] : null;
+  const nextTab = currentTabIndex < tabs.length - 1 ? tabs[currentTabIndex + 1] : null;
+
+  const scrollToContent = () => {
+    const el = document.getElementById('design-system-content');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const copyToClipboard = (hex: string) => {
     navigator.clipboard?.writeText(hex);
     setCopiedHex(hex);
     setTimeout(() => setCopiedHex(null), 2000);
   };
+
+  const copyIconCode = (name: string) => {
+    navigator.clipboard?.writeText(`import { ${name} } from 'lucide-react';`);
+    setCopiedIcon(name);
+    setTimeout(() => setCopiedIcon(null), 2000);
+  };
+
+  const iconCategories = [
+    {
+      category: 'Reputação & Mérito',
+      description: 'Indicadores de confiança, estrelas e reconhecimento autêntico',
+      icons: [
+        { name: 'Star', component: Star, usage: 'Contagem real de indicações recebidas', fill: true, color: 'text-amber-500 fill-amber-500' },
+        { name: 'Award', component: Award, usage: 'Distintivo de destaque ou recomendação especial', color: 'text-[#7B2FFF]' },
+        { name: 'Sparkles', component: Sparkles, usage: 'Novidade, destaques e primeiros passos', color: 'text-purple-500' },
+        { name: 'CheckCircle2', component: CheckCircle2, usage: 'Status atestado e verificação de perfil', color: 'text-emerald-500' },
+        { name: 'BadgeCheck', component: BadgeCheck, usage: 'Selo de perfil verificado por clientes', color: 'text-[#7B2FFF]' },
+      ],
+    },
+    {
+      category: 'Rede & Confiança',
+      description: 'Conexões sociais, laços de vizinhança e segurança',
+      icons: [
+        { name: 'Share2', component: Share2, usage: 'Compartilhamento de perfil no WhatsApp e rede', color: 'text-[#7B2FFF]' },
+        { name: 'Users', component: Users, usage: 'Comunidade, rede de contatos e conexões mútuas', color: 'text-blue-500' },
+        { name: 'ShieldCheck', component: ShieldCheck, usage: 'Segurança garantida e anti-fraude', color: 'text-emerald-500' },
+        { name: 'Link', component: LinkIcon, usage: 'Link direto do perfil profissional', color: 'text-neutral-500' },
+      ],
+    },
+    {
+      category: 'Contato & Ação Direta',
+      description: 'Comunicação sem intermediários ou taxas por telefone',
+      icons: [
+        { name: 'MessageCircle', component: MessageCircle, usage: 'Ação primária de conversa via WhatsApp', color: 'text-emerald-500' },
+        { name: 'Phone', component: Phone, usage: 'Ligação direta e dados de contato', color: 'text-blue-500' },
+        { name: 'ExternalLink', component: ExternalLink, usage: 'Abertura externa de links e conversas', color: 'text-neutral-500' },
+      ],
+    },
+    {
+      category: 'Profissional & Localização',
+      description: 'Atributos do autônomo, especialidades e proximidade',
+      icons: [
+        { name: 'MapPin', component: MapPin, usage: 'Bairro, cidade e cálculo de distância em km', color: 'text-red-500' },
+        { name: 'Briefcase', component: Briefcase, usage: 'Serviços prestados e categoria de trabalho', color: 'text-neutral-600 dark:text-neutral-300' },
+        { name: 'Calendar', component: Calendar, usage: 'Dias de atendimento e disponibilidade na agenda', color: 'text-neutral-600 dark:text-neutral-300' },
+        { name: 'FileText', component: FileText, usage: 'Apresentação detalhada e manifesto do profissional', color: 'text-neutral-600 dark:text-neutral-300' },
+      ],
+    },
+    {
+      category: 'Navegação & Sistema',
+      description: 'Fluxo de uso, buscas e configurações de acessibilidade',
+      icons: [
+        { name: 'Search', component: Search, usage: 'Campo de pesquisa de serviços e profissionais', color: 'text-neutral-500' },
+        { name: 'ArrowLeft', component: ArrowLeft, usage: 'Voltar de tela ou cancelar fluxo', color: 'text-neutral-500' },
+        { name: 'ArrowRight', component: ArrowRight, usage: 'Avançar no cadastro ou fluxo de indicação', color: 'text-[#7B2FFF]' },
+        { name: 'Sun', component: Sun, usage: 'Modo claro (alto contraste diurno)', color: 'text-amber-500' },
+        { name: 'Moon', component: Moon, usage: 'Modo escuro (conforto visual noturno)', color: 'text-indigo-400' },
+      ],
+    },
+  ];
 
   const primaryColors: ColorToken[] = [
     { name: 'Brand Primary', variable: '--qindica-purple', hex: '#7B2FFF', role: 'Cor mestre da marca, botões de ação e nós centrais', textColor: '#FFFFFF' },
@@ -165,36 +260,57 @@ export const DesignSystemView: React.FC = () => {
           </div>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 overflow-x-auto mt-8 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-          {[
-            { id: 'brand', label: '1. Conceito & Naming', icon: Compass },
-            { id: 'colors', label: '2. Cores & Tokens', icon: Palette },
-            { id: 'typography', label: '3. Tipografia & Escala', icon: Type },
-            { id: 'components', label: '4. Componentes Chave', icon: Layers },
-            { id: 'voice', label: '5. Tom de Voz', icon: HeartHandshake },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-2 transition cursor-pointer ${
-                  activeTab === tab.id
-                    ? 'bg-[#7B2FFF] text-white shadow-xs'
-                    : 'bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
-                }`}
-              >
-                <Icon size={14} />
-                {tab.label}
-              </button>
-            );
-          })}
+        {/* Tab Switcher - Grid Responsivo sem Rolagem Oculta */}
+        <div className="mt-8 pt-4 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+              Capítulos do Design System
+            </span>
+            <span className="text-xs font-mono font-bold text-[#7B2FFF] dark:text-[#a068ff]">
+              Capítulo {currentTabIndex + 1} de {tabs.length}
+            </span>
+          </div>
+
+          {/* Grid de 6 abas: 2 colunas no mobile pequeno, 3 no tablet e 6 no desktop */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    scrollToContent();
+                  }}
+                  className={`min-h-[52px] p-2.5 sm:p-3 rounded-2xl text-xs font-bold flex items-center gap-2.5 transition-all cursor-pointer text-left relative ${
+                    isActive
+                      ? 'bg-[#7B2FFF] text-white shadow-md shadow-[#7B2FFF]/20 ring-2 ring-[#7B2FFF]/40 scale-[1.02]'
+                      : 'bg-neutral-100 dark:bg-neutral-800/90 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200/70 dark:border-neutral-700/60'
+                  }`}
+                >
+                  <div
+                    className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 ${
+                      isActive
+                        ? 'bg-white/20 text-white'
+                        : 'bg-neutral-200/80 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300'
+                    }`}
+                  >
+                    <Icon size={14} />
+                  </div>
+                  <div className="min-w-0 flex-1 leading-tight">
+                    <span className="block text-[10px] font-mono opacity-75">Cap. {tab.num}</span>
+                    <span className="block truncate font-bold text-[11px] sm:text-xs">{tab.label}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Main Content Areas based on Active Tab */}
-      <main className="py-12 px-6 sm:px-8 lg:px-12 max-w-6xl mx-auto space-y-16">
+      <main id="design-system-content" className="py-12 px-6 sm:px-8 lg:px-12 max-w-6xl mx-auto space-y-16">
 
         {/* TAB 1: BRAND CONCEPT & STORYTELLING */}
         {activeTab === 'brand' && (
@@ -263,6 +379,159 @@ export const DesignSystemView: React.FC = () => {
                     Funciona perfeitamente em aparelhos Android de entrada com pouca memória. Abre direto no navegador e se instala como PWA sem ocupar espaço.
                   </p>
                 </div>
+              </div>
+            </div>
+
+            {/* Official Brand Logos & Asset Kit */}
+            <div className="space-y-4 pt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-200 dark:border-neutral-800 pb-3">
+                <div>
+                  <h3 className="text-xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-[#7B2FFF]" />
+                    Kit Oficial de Logos & Identidade Visual
+                  </h3>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                    Arquivos SVG vetoriais oficiais para uso no produto, redes sociais (Instagram/LinkedIn) e materiais gráficos.
+                  </p>
+                </div>
+              </div>
+
+              {/* Anatomy and Symbol Description */}
+              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200 dark:border-neutral-700 flex flex-col md:flex-row items-center gap-6">
+                <div className="w-24 h-24 rounded-2xl bg-[#7B2FFF] p-4 flex items-center justify-center shrink-0 shadow-lg shadow-[#7B2FFF]/30">
+                  <BrandLogo variant="symbol" theme="purple" size="custom" className="w-full h-full" />
+                </div>
+                <div className="space-y-2 text-xs leading-relaxed">
+                  <h4 className="text-sm font-bold text-neutral-900 dark:text-white">
+                    Anatomia do Símbolo & Tipografia
+                  </h4>
+                  <p className="text-neutral-600 dark:text-neutral-300">
+                    O símbolo funde as letras <strong>Q</strong> e <strong>i</strong> em uma assinatura gráfica única. 
+                    O pingo tradicional da letra <code className="text-[#7B2FFF] font-bold">i</code> é substituído por uma <strong>estrela dourada de 5 pontas (#FFA800)</strong>, 
+                    simbolizando a nota máxima de recomendação, o reconhecimento do trabalho bem feito e a iluminação da confiança humana.
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <span className="px-2 py-0.5 rounded-md bg-[#7B2FFF]/10 text-[#7B2FFF] font-semibold text-[11px]">
+                      Roxo Oficial: #7B2FFF
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold text-[11px]">
+                      Estrela de Confiança: #FFA800
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-neutral-200/80 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 font-semibold text-[11px]">
+                      Tipografia Geométrica Suave
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Grid of the 6 official SVG variants */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {[
+                  {
+                    name: 'PurpleBgFull.svg',
+                    title: 'Versão Completa · Fundo Roxo',
+                    desc: 'Uso em banners institucionais, apresentações e cartões de destaque.',
+                    file: '/logos/PurpleBgFull.svg',
+                    bg: 'bg-[#7B2FFF]',
+                    type: 'full' as const,
+                  },
+                  {
+                    name: 'WhiteBgFull.svg',
+                    title: 'Versão Completa · Fundo Claro',
+                    desc: 'Padrão principal para cabeçalhos, documentos claros e posts com fundo branco.',
+                    file: '/logos/WhiteBgFull.svg',
+                    bg: 'bg-white border border-neutral-200',
+                    type: 'full' as const,
+                  },
+                  {
+                    name: 'BlackBgFull.svg',
+                    title: 'Versão Completa · Fundo Escuro',
+                    desc: 'Versão de alto contraste para interfaces dark mode, displays OLED e fundos pretos.',
+                    file: '/logos/BlackBgFull.svg',
+                    bg: 'bg-[#0F0F12]',
+                    type: 'full' as const,
+                  },
+                  {
+                    name: 'PurpleBgSymbol.svg',
+                    title: 'Símbolo Qi · Fundo Roxo',
+                    desc: 'Ícone de aplicativo, avatar de redes sociais e favicon oficial.',
+                    file: '/logos/PurpleBgSymbol.svg',
+                    bg: 'bg-[#7B2FFF]',
+                    type: 'symbol' as const,
+                  },
+                  {
+                    name: 'WhiteBgSymbol.svg',
+                    title: 'Símbolo Qi · Fundo Claro',
+                    desc: 'Símbolo compacto para layouts de navegação claros e botões pequenos.',
+                    file: '/logos/WhiteBgSymbol.svg',
+                    bg: 'bg-white border border-neutral-200',
+                    type: 'symbol' as const,
+                  },
+                  {
+                    name: 'BlackBgSymbol.svg',
+                    title: 'Símbolo Qi · Fundo Escuro',
+                    desc: 'Símbolo compacto sobre fundo escuro/preto para barras e rodapés escuros.',
+                    file: '/logos/BlackBgSymbol.svg',
+                    bg: 'bg-[#0F0F12]',
+                    type: 'symbol' as const,
+                  },
+                ].map((asset) => (
+                  <div
+                    key={asset.name}
+                    className="flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs hover:border-[#7B2FFF]/50 transition-all"
+                  >
+                    {/* Visual Preview Box */}
+                    <div className={`h-36 ${asset.bg} flex items-center justify-center p-6 relative select-none`}>
+                      <img
+                        src={asset.file}
+                        alt={asset.title}
+                        className={asset.type === 'symbol' ? 'h-16 w-16 object-contain' : 'h-10 max-w-[85%] object-contain'}
+                        referrerPolicy="no-referrer"
+                      />
+                      <span className="absolute top-2.5 right-2.5 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/40 text-white backdrop-blur-xs">
+                        SVG
+                      </span>
+                    </div>
+
+                    {/* Metadata & Actions */}
+                    <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                      <div>
+                        <p className="text-xs font-mono font-bold text-[#7B2FFF] dark:text-[#a068ff] truncate">
+                          {asset.name}
+                        </p>
+                        <h4 className="text-xs font-bold text-neutral-900 dark:text-white mt-0.5">
+                          {asset.title}
+                        </h4>
+                        <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1 leading-normal">
+                          {asset.desc}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-neutral-100 dark:border-neutral-800 flex items-center gap-2">
+                        <a
+                          href={asset.file}
+                          download={asset.name}
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-[#7B2FFF] hover:bg-[#6820df] text-white text-xs font-semibold active:scale-95 transition-all shadow-xs"
+                        >
+                          <Download size={13} />
+                          <span>Baixar SVG</span>
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(asset.file);
+                            setCopiedIcon(asset.name);
+                            setTimeout(() => setCopiedIcon(null), 2000);
+                          }}
+                          className="px-2.5 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 text-xs font-medium active:scale-95 transition-colors"
+                          title="Copiar caminho do arquivo"
+                        >
+                          {copiedIcon === asset.name ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -415,7 +684,213 @@ export const DesignSystemView: React.FC = () => {
           </section>
         )}
 
-        {/* TAB 4: COMPONENTS SHOWCASE */}
+        {/* TAB 4: ICONOGRAPHY (LUCIDE ICONS) */}
+        {activeTab === 'icons' && (
+          <section className="space-y-10">
+            <div className="space-y-2">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#7B2FFF]">Iconografia & Glifos</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h2 className="text-2xl sm:text-3xl font-extrabold">Biblioteca Oficial: Lucide Icons</h2>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://lucide.dev/icons"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 transition border border-neutral-200 dark:border-neutral-700"
+                  >
+                    lucide.dev <ExternalLink size={12} />
+                  </a>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#7B2FFF]/10 text-[#7B2FFF] dark:text-[#a068ff]">
+                    Plugin Figma: Lucide Icons
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-3xl">
+                O Qindica padroniza 100% dos seus ícones através da biblioteca <strong>lucide-react</strong>. Todos os glifos compartilham a mesma métrica geométrica, cantos arredondados e traço consistente, garantindo unidade entre o produto web, o PWA e as peças visuais de Instagram/Figma.
+              </p>
+            </div>
+
+            {/* Spec Rules / Pillars */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-[#7B2FFF]/15 text-[#7B2FFF] flex items-center justify-center font-bold text-xs">
+                  24px
+                </div>
+                <h3 className="text-sm font-bold text-neutral-900 dark:text-white">Grid & Geometria Base</h3>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                  Desenhados sobre matriz óptica de 24×24px. As curvas usam terminação suave (<code className="text-[10px] bg-neutral-200 dark:bg-neutral-700 px-1 py-0.5 rounded">round</code>) para harmonizar com os cantos <code className="text-[10px] bg-neutral-200 dark:bg-neutral-700 px-1 py-0.5 rounded">rounded-2xl</code> do app.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-[#7B2FFF]/15 text-[#7B2FFF] flex items-center justify-center font-bold text-xs">
+                  2px
+                </div>
+                <h3 className="text-sm font-bold text-neutral-900 dark:text-white">Espessura do Traço (Stroke)</h3>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                  Padrão absoluto de <code className="text-[10px] bg-neutral-200 dark:bg-neutral-700 px-1 py-0.5 rounded">strokeWidth=&#123;2&#125;</code>. Mantém alta legibilidade mesmo em telas AMOLED ou LCDs populares sob forte iluminação solar.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-amber-500/15 text-amber-500 flex items-center justify-center font-bold text-xs">
+                  ★
+                </div>
+                <h3 className="text-sm font-bold text-neutral-900 dark:text-white">Outline vs. Solid Fill</h3>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                  Ícones de interface são predominantemente lineares (outline). A única exceção com preenchimento pleno sólido é a <strong>Estrela de Mérito</strong> (<code className="text-[10px] bg-neutral-200 dark:bg-neutral-700 px-1 py-0.5 rounded">fill-amber-500</code>).
+                </p>
+              </div>
+            </div>
+
+            {/* Sizing Scale Showcase */}
+            <div className="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200 dark:border-neutral-700 space-y-4">
+              <h3 className="text-sm font-bold text-neutral-900 dark:text-white">Escala Semântica de Tamanhos na Interface</h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-neutral-500">14px (Micro / Badge)</span>
+                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-700 px-1.5 py-0.5 rounded font-mono">size=14</span>
+                  </div>
+                  <div className="h-12 flex items-center gap-3">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 text-xs font-bold">
+                      <Star size={14} className="fill-amber-500 text-amber-500" />
+                      14 indicações
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-neutral-500 leading-tight">Chips, tags de 1º grau, contadores numéricos e status de conexão.</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-neutral-500">18px (Botões / Ações)</span>
+                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-700 px-1.5 py-0.5 rounded font-mono">size=18</span>
+                  </div>
+                  <div className="h-12 flex items-center gap-2">
+                    <button className="px-3 py-1.5 rounded-lg bg-[#25D366] text-white text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                      <MessageCircle size={18} />
+                      WhatsApp
+                    </button>
+                    <button className="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300">
+                      <Share2 size={18} />
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-neutral-500 leading-tight">Botões primários, campos de formulário, navegação e botões de cabeçalho.</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-neutral-500">24px (Seção / Destaque)</span>
+                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-700 px-1.5 py-0.5 rounded font-mono">size=24</span>
+                  </div>
+                  <div className="h-12 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#7B2FFF]/15 text-[#7B2FFF] flex items-center justify-center">
+                      <ShieldCheck size={24} />
+                    </div>
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-500 flex items-center justify-center">
+                      <Users size={24} />
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-neutral-500 leading-tight">Cabeçalhos de módulos, cards informativos e seções explicativas.</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-neutral-500">32px (Hero / Feedback)</span>
+                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-700 px-1.5 py-0.5 rounded font-mono">size=32</span>
+                  </div>
+                  <div className="h-12 flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-2xl bg-purple-500/15 text-[#7B2FFF] flex items-center justify-center">
+                      <Sparkles size={32} />
+                    </div>
+                    <div className="w-11 h-11 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center">
+                      <CheckCircle2 size={32} />
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-neutral-500 leading-tight">Telas de boas-vindas, celebração de nova estrela recebida e onboarding.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Categorized Icon Catalog */}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-bold text-neutral-900 dark:text-white">Catálogo Semântico de Ícones do Qindica</h3>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">Clique em qualquer ícone para copiar o comando de importação oficial para React.</p>
+                </div>
+                {copiedIcon && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-bold animate-fade-in">
+                    <Check size={14} />
+                    Copiado: import &#123; {copiedIcon} &#125; from 'lucide-react';
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-6">
+                {iconCategories.map((group) => (
+                  <div key={group.category} className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#7B2FFF]">{group.category}</h4>
+                      <span className="text-xs text-neutral-400">· {group.description}</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {group.icons.map((item) => {
+                        const IconComponent = item.component;
+                        return (
+                          <div
+                            key={item.name}
+                            onClick={() => copyIconCode(item.name)}
+                            className="p-3.5 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/70 hover:border-[#7B2FFF] dark:hover:border-[#7B2FFF] transition-all cursor-pointer flex items-center justify-between gap-3 group active:scale-98"
+                            title={`Clique para copiar import { ${item.name} } from 'lucide-react'`}
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className={`w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-700/60 flex items-center justify-center shrink-0 ${item.color}`}>
+                                <IconComponent size={20} className={item.fill ? 'fill-current' : ''} />
+                              </div>
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-xs font-bold text-neutral-900 dark:text-white group-hover:text-[#7B2FFF] transition-colors">{item.name}</span>
+                                  <code className="text-[10px] text-neutral-400 font-mono">lucide</code>
+                                </div>
+                                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 leading-tight">{item.usage}</p>
+                              </div>
+                            </div>
+
+                            <div className="text-neutral-300 group-hover:text-[#7B2FFF] dark:text-neutral-600 dark:group-hover:text-[#a068ff] transition-colors shrink-0">
+                              {copiedIcon === item.name ? (
+                                <Check size={16} className="text-emerald-500" />
+                              ) : (
+                                <Copy size={16} />
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Figma & Social Media Integration Tip */}
+            <div className="p-5 rounded-2xl bg-[#7B2FFF]/5 dark:bg-[#7B2FFF]/10 border border-[#7B2FFF]/20 flex items-start gap-4">
+              <div className="w-9 h-9 rounded-xl bg-[#7B2FFF] text-white flex items-center justify-center shrink-0">
+                <Code2 size={20} />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-sm font-bold text-neutral-900 dark:text-white">Uso no Figma, Claude Design e Posts de Instagram</h4>
+                <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  Para criar criativos de Instagram e designs no Figma com os mesmos ícones: instale o plugin <strong>"Lucide Icons"</strong> no Figma. Ele permite buscar qualquer um dos nomes acima e inseri-los já vetorizados em SVG com 24×24px e traço de 2px, mantendo fidelidade estrita entre a interface do app e sua comunicação nas redes sociais.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* TAB 5: COMPONENTS SHOWCASE */}
         {activeTab === 'components' && (
           <section className="space-y-8">
             <div className="space-y-2">
@@ -553,6 +1028,35 @@ export const DesignSystemView: React.FC = () => {
             </div>
           </section>
         )}
+
+        {/* Chapter Pagination Navigator */}
+        <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+          {prevTab ? (
+            <button
+              onClick={() => {
+                setActiveTab(prevTab.id);
+                scrollToContent();
+              }}
+              className="w-full sm:w-auto px-4 py-3 rounded-2xl text-xs font-bold border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:border-[#7B2FFF] dark:hover:border-[#7B2FFF] text-neutral-700 dark:text-neutral-200 transition flex items-center justify-center gap-2 cursor-pointer shadow-2xs group"
+            >
+              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+              <span>Capítulo anterior: <strong className="text-neutral-900 dark:text-white">{prevTab.num}. {prevTab.label}</strong></span>
+            </button>
+          ) : <div />}
+
+          {nextTab && (
+            <button
+              onClick={() => {
+                setActiveTab(nextTab.id);
+                scrollToContent();
+              }}
+              className="w-full sm:w-auto px-5 py-3 rounded-2xl text-xs font-bold bg-[#7B2FFF] hover:bg-[#6916EE] text-white transition flex items-center justify-center gap-2 shadow-xs cursor-pointer ml-auto group"
+            >
+              <span>Próximo capítulo: <strong>{nextTab.num}. {nextTab.label}</strong></span>
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          )}
+        </div>
 
         {/* Live Experience CTA Card */}
         <div className="p-6 sm:p-8 rounded-3xl bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700 flex flex-col sm:flex-row items-center justify-between gap-6">

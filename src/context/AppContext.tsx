@@ -732,11 +732,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
+      markAppExplored();
+
       // Link referral and award star upon registration / initial sign-in
       await connectReferralAndAwardStar(user.uid, user.displayName || 'Novo Usuário');
 
       showToast(`Bem-vindo(a), ${user.displayName?.split(' ')[0] || 'usuário'}! 👋`);
       closeAuthModal();
+
+      // Exit Landing Page directly into the App
+      if (currentRoute.name === 'landing' || currentRoute.name === 'auth') {
+        navigate({ name: 'home' });
+      }
     } catch (error: any) {
       if (error.code === 'auth/popup-closed-by-user') {
         return;
@@ -753,15 +760,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
       throw error;
     }
-  }, [showToast, closeAuthModal, connectReferralAndAwardStar]);
+  }, [showToast, closeAuthModal, connectReferralAndAwardStar, currentRoute.name, navigate]);
 
   const loginWithEmail = useCallback(
     async (email: string, pass: string) => {
       try {
         const result = await signInWithEmailAndPassword(auth, email.trim(), pass);
         const user = result.user;
+        markAppExplored();
         showToast(`Bem-vindo(a) de volta, ${user.displayName?.split(' ')[0] || 'usuário'}!`);
         closeAuthModal();
+
+        // Exit Landing Page directly into the App
+        if (currentRoute.name === 'landing' || currentRoute.name === 'auth') {
+          navigate({ name: 'home' });
+        }
       } catch (error: any) {
         let msg = 'Erro ao realizar login. Verifique seus dados.';
         if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
@@ -775,7 +788,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         throw error;
       }
     },
-    [showToast, closeAuthModal]
+    [showToast, closeAuthModal, currentRoute.name, navigate]
   );
 
   const registerWithEmail = useCallback(
@@ -814,8 +827,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         // Link referral, create mutual connection and award +1 star to the inviter
         await connectReferralAndAwardStar(user.uid, name);
 
+        markAppExplored();
         showToast('Conta criada com sucesso! 🎉');
         closeAuthModal();
+
+        // Exit Landing Page directly into the App
+        if (currentRoute.name === 'landing' || currentRoute.name === 'auth') {
+          navigate({ name: 'home' });
+        }
       } catch (error: any) {
         let msg = 'Erro ao cadastrar. Tente novamente.';
         if (error.code === 'auth/email-already-in-use') {
@@ -829,7 +848,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         throw error;
       }
     },
-    [showToast, closeAuthModal]
+    [showToast, closeAuthModal, connectReferralAndAwardStar, currentRoute.name, navigate]
   );
 
   const resetPassword = useCallback(

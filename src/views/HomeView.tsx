@@ -316,15 +316,17 @@ export const HomeView: React.FC = () => {
         </div>
 
         {/* Mobile Quick Invite Bar */}
-        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800/80 flex md:hidden items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 text-xs text-neutral-600 dark:text-neutral-400">
+        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800/80 flex md:hidden items-center justify-between gap-2 min-w-0 w-full overflow-hidden">
+          <div className="flex items-center gap-1.5 text-xs text-neutral-600 dark:text-neutral-400 min-w-0 flex-1 overflow-hidden">
             <Star size={12} className="fill-amber-400 text-amber-500 shrink-0" />
-            <span className="truncate">Ganhe +1 estrela por amigo cadastrado</span>
+            <span className="truncate font-medium block min-w-0" title="Ganhe +1 estrela por amigo cadastrado">
+              Ganhe +1 estrela por amigo cadastrado
+            </span>
           </div>
           <button
             type="button"
             onClick={() => navigate({ name: 'share', initialTab: 'invite' })}
-            className="px-2.5 py-1.5 rounded-lg bg-[#7B2FFF] text-white text-xs font-bold flex items-center gap-1 shrink-0 shadow-xs active:scale-95 cursor-pointer"
+            className="px-2.5 py-1.5 rounded-lg bg-[#7B2FFF] text-white text-xs font-bold flex items-center gap-1 shrink-0 shadow-xs active:scale-95 cursor-pointer whitespace-nowrap"
           >
             <UserPlus size={12} />
             <span>Convidar</span>

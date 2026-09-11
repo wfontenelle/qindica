@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Mail, Lock, User as UserIcon, ArrowRight, Eye, EyeOff, Sparkles, CheckCircle2, Phone, MessageCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { BrandLogo } from './BrandLogo';
 
 export const AuthModal: React.FC = () => {
   const {
@@ -13,6 +14,8 @@ export const AuthModal: React.FC = () => {
     loginWithEmail,
     registerWithEmail,
     resetPassword,
+    currentRoute,
+    navigate,
   } = useApp();
 
   const [email, setEmail] = useState('');
@@ -27,11 +30,18 @@ export const AuthModal: React.FC = () => {
 
   if (!isAuthModalOpen) return null;
 
+  const navigateToAppIfOnLanding = () => {
+    if (currentRoute.name === 'landing' || currentRoute.name === 'auth') {
+      navigate({ name: 'home' });
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     try {
       setIsLoading(true);
       setErrorMessage(null);
       await loginWithGoogle();
+      navigateToAppIfOnLanding();
     } catch (err: any) {
       if (err?.code !== 'auth/popup-closed-by-user') {
         setErrorMessage('Não foi possível entrar com o Google.');
@@ -59,6 +69,7 @@ export const AuthModal: React.FC = () => {
       try {
         setIsLoading(true);
         await registerWithEmail(name, email, password, phone, whatsapp);
+        navigateToAppIfOnLanding();
       } catch (err: any) {
         setErrorMessage(err.message || 'Erro ao realizar cadastro.');
       } finally {
@@ -68,6 +79,7 @@ export const AuthModal: React.FC = () => {
       try {
         setIsLoading(true);
         await loginWithEmail(email, password);
+        navigateToAppIfOnLanding();
       } catch (err: any) {
         setErrorMessage('E-mail ou senha incorretos.');
       } finally {
@@ -111,9 +123,7 @@ export const AuthModal: React.FC = () => {
           {/* Top Banner & Close */}
           <div className="p-6 pb-4 flex items-start justify-between border-b border-neutral-100 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/60">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-md bg-[#7B2FFF] text-white flex items-center justify-center font-black text-xl shadow-sm">
-                Q
-              </div>
+              <BrandLogo variant="symbol" theme="purple" size="custom" className="w-10 h-10 rounded-lg shadow-sm" />
               <div>
                 <h2 className="text-lg font-extrabold text-neutral-900 dark:text-white tracking-tight leading-tight">
                   {authModalMode === 'login' && 'Entrar no Qindica'}

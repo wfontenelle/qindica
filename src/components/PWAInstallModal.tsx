@@ -12,6 +12,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
+import { BrandLogo } from './BrandLogo';
 
 interface PWAInstallModalProps {
   isOpen: boolean;
@@ -57,13 +58,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({ isOpen, onClos
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#6916EE] to-[#8E44FF] p-2 flex items-center justify-center shadow-md shadow-[#7B2FFF]/20 border border-white/20">
-              <img 
-                src="/apple-touch-icon.png" 
-                alt="Qindica Icon" 
-                className="w-full h-full object-contain rounded-lg"
-              />
-            </div>
+            <BrandLogo variant="symbol" theme="purple" size="custom" className="w-12 h-12 rounded-xl shadow-md shadow-[#7B2FFF]/20 shrink-0" />
             <div>
               <div className="flex items-center gap-1.5">
                 <h3 className="text-lg font-bold">Instalar o Qindica</h3>

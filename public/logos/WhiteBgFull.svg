@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 180" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@900&amp;display=swap');
+      .logo-text {
+        font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 900;
+        letter-spacing: -2px;
+      }
+    </style>
+  </defs>
+  <rect width="540" height="180" fill="#FFFFFF" />
+  <g transform="translate(14, 0)">
+    <!-- Letter Q -->
+    <path d="M 68 28 C 33 28 10 51 10 86 C 10 121 33 144 68 144 C 78.5 144 88.5 141.2 97.2 136.1 L 115.8 154.7 C 119.2 158.1 124.8 158.1 128.2 154.7 C 131.6 151.3 131.6 145.7 128.2 142.3 L 110.1 124.2 C 118.9 114.3 124 101 124 86 C 124 51 101 28 68 28 Z M 68 52 C 86.8 52 99 66.5 99 86 C 99 97.2 93.8 107 85.4 112.6 L 79.2 106.4 C 75.8 103 70.2 103 66.8 106.4 C 63.4 109.8 63.4 115.4 66.8 118.8 L 71.2 123.2 C 70.1 123.7 69.1 124 68 124 C 49.2 124 35 105.2 35 86 C 35 66.8 49.2 52 68 52 Z" fill="#7B2FFF" />
+    
+    <!-- Letter i stem -->
+    <rect x="144" y="82" width="22" height="62" rx="11" fill="#7B2FFF" />
+    
+    <!-- Star dot on top of i -->
+    <path d="M 155 16 C 156.2 16 157.3 16.8 157.7 18 L 163.5 33.5 L 179.8 34.6 C 181.1 34.7 182.2 35.7 182.5 37 C 182.9 38.3 182.4 39.6 181.3 40.4 L 168.7 50.2 L 172.9 66.2 C 173.2 67.5 172.7 68.8 171.6 69.6 C 170.5 70.4 169.1 70.4 168 69.5 L 155 60.3 L 142 69.5 C 140.9 70.4 139.5 70.4 138.4 69.6 C 137.3 68.8 136.8 67.5 137.1 66.2 L 141.3 50.2 L 128.7 40.4 C 127.6 39.6 127.1 38.3 127.5 37 C 127.8 35.7 128.9 34.7 130.2 34.6 L 146.5 33.5 L 152.3 18 C 152.7 16.8 153.8 16 155 16 Z" fill="#FFA800" stroke="#FFA800" stroke-width="4" stroke-linejoin="round" />
+    
+    <!-- "ndica" typography -->
+    <text x="180" y="144" font-size="120" class="logo-text" fill="#232733">ndica</text>
+  </g>
+</svg>

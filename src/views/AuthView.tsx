@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Lock, User as UserIcon, ArrowRight, Eye, EyeOff, Sparkles, CheckCircle2, ShieldCheck, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { AuthMode } from '../types';
+import { BrandLogo } from '../components/BrandLogo';
 
 interface AuthViewProps {
   initialMode?: AuthMode;
@@ -97,12 +98,10 @@ export const AuthView: React.FC<AuthViewProps> = ({ initialMode = 'login' }) => 
         {/* Left Side: Brand Promo / Trust network explainer */}
         <div className="md:col-span-5 bg-[#7B2FFF] text-white rounded-xl p-6 sm:p-8 flex flex-col justify-between shadow-xl relative overflow-hidden">
           <div className="relative z-10">
-            <div className="w-12 h-12 rounded-md bg-white text-[#7B2FFF] flex items-center justify-center font-black text-2xl shadow-md mb-4">
-              Q
+            <div className="w-14 h-14 rounded-xl bg-white p-2.5 shadow-md mb-5 flex items-center justify-center">
+              <BrandLogo variant="symbol" theme="light" size="custom" className="w-full h-full" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-              Qi<span className="text-neutral-200">ndica</span>
-            </h2>
+            <BrandLogo variant="full" theme="purple" size="custom" className="h-8 w-auto mb-3" />
             <p className="text-sm text-purple-100 mt-2 leading-relaxed">
               A rede de confiança onde profissionais autênticos são indicados e reconhecidos por quem realmente conhece o seu trabalho.
             </p>

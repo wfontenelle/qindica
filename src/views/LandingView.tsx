@@ -24,6 +24,7 @@ import {
 import { useApp } from '../context/AppContext';
 import { UserCard } from '../components/UserCard';
 import { PWAInstallModal } from '../components/PWAInstallModal';
+import { BrandLogo } from '../components/BrandLogo';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
 export const LandingView: React.FC = () => {
@@ -65,14 +66,10 @@ export const LandingView: React.FC = () => {
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
           <div 
             onClick={() => scrollToSection('hero')}
-            className="flex items-center gap-2 cursor-pointer group select-none shrink-0"
+            className="flex items-center cursor-pointer group select-none shrink-0"
+            aria-label="Qindica"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#6916EE] to-[#8E44FF] p-1 flex items-center justify-center shadow-xs">
-              <img src="/apple-touch-icon.png" alt="Qindica" className="w-full h-full object-contain rounded-md" />
-            </div>
-            <span className="text-xl font-extrabold tracking-tight">
-              <span className="text-[#7B2FFF]">Qi</span>ndica
-            </span>
+            <BrandLogo variant="full" theme="auto" size="custom" className="h-7 sm:h-8 w-auto" />
           </div>
 
           <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs font-semibold text-neutral-600 dark:text-neutral-300">
@@ -833,12 +830,10 @@ export const LandingView: React.FC = () => {
       {/* 12. FOOTER */}
       <footer className="py-10 sm:py-12 px-6 sm:px-8 lg:px-12 border-t border-neutral-200 dark:border-neutral-800 text-xs text-neutral-500 dark:text-neutral-400">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="text-base font-black text-neutral-900 dark:text-neutral-100">
-              <span className="text-[#7B2FFF]">Qi</span>ndica
-            </span>
-            <span>·</span>
-            <span className="text-[11px] sm:text-xs">A rede de recomendações autênticas</span>
+          <div className="flex items-center gap-3 whitespace-nowrap">
+            <BrandLogo variant="full" theme="auto" size="custom" className="h-6 w-auto" />
+            <span className="text-neutral-300 dark:text-neutral-700">·</span>
+            <span className="text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-400">A rede de recomendações autênticas</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-medium">
